@@ -7,13 +7,6 @@ const nextConfig: NextConfig = {
   output: "export",
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "o3xs.com",
-        pathname: "/wp-content/**",
-      },
-    ],
   },
   trailingSlash: true,
   basePath: isProd && !isCustomDomain ? "/website2.0" : "",

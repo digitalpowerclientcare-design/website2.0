@@ -4,7 +4,7 @@ export const SITE = {
     "We build AI systems that engineer trust into software delivery.",
   subTagline: "The engineering studio behind FORGE AI.",
   email: "contact@o3xs.com",
-  logo: "https://o3xs.com/wp-content/uploads/2026/01/O3Xs-Logo-e1769093278916.png",
+  logo: "/logos/o3xs-logo.png",
 } as const;
 
 export const NAV_LINKS = [

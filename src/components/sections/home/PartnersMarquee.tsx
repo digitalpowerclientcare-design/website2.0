@@ -1,16 +1,17 @@
 "use client";
 
+import Image from "next/image";
+
 const PARTNERS = [
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/perplexity.png", alt: "Perplexity" },
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/jasper.png", alt: "Jasper" },
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/google-1.png", alt: "Google" },
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/defender.png", alt: "Microsoft Defender" },
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/cursor.png", alt: "Cursor" },
-  { src: "https://o3xs.com/wp-content/uploads/2026/01/copilot.png", alt: "GitHub Copilot" },
+  { src: "/logos/perplexity.png", alt: "Perplexity" },
+  { src: "/logos/jasper.png", alt: "Jasper" },
+  { src: "/logos/google.png", alt: "Google" },
+  { src: "/logos/defender.png", alt: "Microsoft Defender" },
+  { src: "/logos/cursor.png", alt: "Cursor" },
+  { src: "/logos/copilot.png", alt: "GitHub Copilot" },
 ] as const;
 
 export function PartnersMarquee() {
-  // Two copies side by side for a seamless 0% → -50% loop.
   const items = [...PARTNERS, ...PARTNERS];
 
   return (
@@ -32,13 +33,13 @@ export function PartnersMarquee() {
       <div className="partners-marquee group relative w-full overflow-hidden">
         <div className="partners-marquee__track group-hover:[animation-play-state:paused]">
           {items.map((logo, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               key={`${logo.alt}-${i}`}
               src={logo.src}
               alt={logo.alt}
-              loading="lazy"
-              decoding="async"
+              width={200}
+              height={44}
+              unoptimized
               className="partners-marquee__logo"
             />
           ))}
