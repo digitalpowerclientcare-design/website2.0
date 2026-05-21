@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { Check, Maximize2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { assetPath } from "@/lib/assetPath";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { StripeMesh } from "./StripeMesh";
 
@@ -109,7 +110,7 @@ function TilePreview({
             <div className="absolute right-0 bottom-0 w-[72%] overflow-hidden rounded-xl border border-white/50 shadow-xl">
               <div className="relative aspect-[16/11] bg-[#0a0a12]">
                 <Image
-                  src="/forge/validation.png"
+                  src={assetPath("/forge/validation.png")}
                   alt=""
                   fill
                   className="object-cover object-top"

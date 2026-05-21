@@ -1,14 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/assetPath";
 
 const PARTNERS = [
-  { src: "/logos/perplexity.png", alt: "Perplexity" },
-  { src: "/logos/jasper.png", alt: "Jasper" },
-  { src: "/logos/google.png", alt: "Google" },
-  { src: "/logos/defender.png", alt: "Microsoft Defender" },
-  { src: "/logos/cursor.png", alt: "Cursor" },
-  { src: "/logos/copilot.png", alt: "GitHub Copilot" },
+  { file: "perplexity.png", alt: "Perplexity" },
+  { file: "jasper.png", alt: "Jasper" },
+  { file: "google.png", alt: "Google" },
+  { file: "defender.png", alt: "Microsoft Defender" },
+  { file: "cursor.png", alt: "Cursor" },
+  { file: "copilot.png", alt: "GitHub Copilot" },
 ] as const;
 
 export function PartnersMarquee() {
@@ -35,7 +36,7 @@ export function PartnersMarquee() {
           {items.map((logo, i) => (
             <Image
               key={`${logo.alt}-${i}`}
-              src={logo.src}
+              src={assetPath(`/logos/${logo.file}`)}
               alt={logo.alt}
               width={200}
               height={44}

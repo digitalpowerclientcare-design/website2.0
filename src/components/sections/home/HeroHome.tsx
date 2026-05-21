@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { assetPath } from "@/lib/assetPath";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
@@ -89,7 +90,7 @@ export function HeroHome() {
             </div>
             <div className="relative aspect-[16/11] bg-[#f4f6fb]">
               <Image
-                src="/forge/agents.png"
+                src={assetPath("/forge/agents.png")}
                 alt="FORGE AI verification pipeline"
                 fill
                 className="object-cover object-top"

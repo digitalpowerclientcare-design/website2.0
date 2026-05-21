@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { assetPath } from "@/lib/assetPath";
 import { motion } from "motion/react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 
 const SHOTS = [
-  { src: "/forge/pipeline.png", label: "Feature Pipeline" },
-  { src: "/forge/agents.png", label: "Agent Execution" },
-  { src: "/forge/code-review.png", label: "Verified Code Review" },
-  { src: "/forge/compliance.png", label: "SOC2 Compliance" },
+  { src: assetPath("/forge/pipeline.png"), label: "Feature Pipeline" },
+  { src: assetPath("/forge/agents.png"), label: "Agent Execution" },
+  { src: assetPath("/forge/code-review.png"), label: "Verified Code Review" },
+  { src: assetPath("/forge/compliance.png"), label: "SOC2 Compliance" },
 ] as const;
 
 const LOGS = [

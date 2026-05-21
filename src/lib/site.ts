@@ -1,10 +1,12 @@
+import { assetPath } from "./assetPath";
+
 export const SITE = {
   name: "O3Xs",
   tagline:
     "We build AI systems that engineer trust into software delivery.",
   subTagline: "The engineering studio behind FORGE AI.",
   email: "contact@o3xs.com",
-  logo: "/logos/o3xs-logo.png",
+  logo: assetPath("/logos/o3xs-logo.png"),
 } as const;
 
 export const NAV_LINKS = [
