@@ -1,66 +1,58 @@
-"use client";
-
-import Link from "next/link";
-import { useRef, useState } from "react";
-import { motion, useSpring } from "motion/react";
-import { cn } from "@/lib/utils";
-
-type MagneticButtonProps = {
-  href: string;
-  children: React.ReactNode;
-  variant?: "indigo" | "white";
-  className?: string;
-};
-
-const MAX_OFFSET = 8;
+'use client';
+import { useRef, useState } from 'react';
+import { motion } from 'motion/react';
 
 export function MagneticButton({
-  href,
   children,
-  variant = "indigo",
-  className,
-}: MagneticButtonProps) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const [hovering, setHovering] = useState(false);
+  className = '',
+  onClick,
+  href,
+  style,
+  variant,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  href?: string;
+  style?: React.CSSProperties;
+  /** @deprecated Use className="btn-primary" | "btn-ghost" */
+  variant?: 'indigo' | 'white';
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
 
-  const x = useSpring(0, { stiffness: 350, damping: 28 });
-  const y = useSpring(0, { stiffness: 350, damping: 28 });
+  const resolvedClass =
+    className ||
+    (variant === 'white' ? 'btn-white' : variant === 'indigo' ? 'btn-primary' : '');
 
-  const handleMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = ((e.clientX - centerX) / rect.width) * MAX_OFFSET;
-    const deltaY = ((e.clientY - centerY) / rect.height) * MAX_OFFSET;
-    x.set(deltaX);
-    y.set(deltaY);
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    setPos({
+      x: (e.clientX - cx) * 0.3,
+      y: (e.clientY - cy) * 0.3,
+    });
   };
 
-  const reset = () => {
-    x.set(0);
-    y.set(0);
-    setHovering(false);
-  };
+  const handleMouseLeave = () => setPos({ x: 0, y: 0 });
 
-  return (
-    <motion.span
-      style={{ x, y, willChange: hovering ? "transform" : "auto" }}
-      className="inline-block"
+  const content = (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className={resolvedClass}
+      style={style}
+      onClick={onClick}
     >
-      <Link
-        ref={ref}
-        href={href}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={reset}
-        onMouseMove={handleMove}
-        className={cn(
-          variant === "indigo" ? "btn-indigo" : "btn-white",
-          className,
-        )}
-      >
-        {children}
-      </Link>
-    </motion.span>
+      {children}
+    </motion.div>
   );
+
+  if (href) return <a href={href} style={{ textDecoration: 'none' }}>{content}</a>;
+  return content;
 }

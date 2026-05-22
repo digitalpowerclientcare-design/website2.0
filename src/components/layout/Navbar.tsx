@@ -1,98 +1,179 @@
-"use client";
+'use client';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { MagneticButton } from '@/components/ui/MagneticButton';
+import { assetPath } from '@/lib/assetPath';
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NAV_LINKS, SITE } from "@/lib/site";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
+const links = [
+  { href: '/consulting', label: 'Consulting' },
+  { href: '/forge-ai', label: 'FORGE AI' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
 
 export function Navbar() {
-  const navRef = useRef<HTMLElement>(null);
-  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        start: 80,
-        end: 99999,
-        onEnter: () => nav.classList.add("nav-scrolled"),
-        onLeaveBack: () => nav.classList.remove("nav-scrolled"),
-      });
-    }, nav);
-
-    return () => ctx.revert();
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <header
-      ref={navRef}
-      className="fixed top-0 z-50 w-full border-b border-transparent bg-[var(--canvas)] transition-[border-color,box-shadow,backdrop-filter] duration-300 [&.nav-scrolled]:border-[var(--border)] [&.nav-scrolled]:bg-white/95 [&.nav-scrolled]:shadow-[0_1px_0_rgba(0,0,0,0.04)] [&.nav-scrolled]:backdrop-blur-md"
+    <motion.header
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        transition: 'all 0.3s ease',
+        background: scrolled ? 'rgba(255,255,255,0.85)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled
+          ? '1px solid var(--border)'
+          : '1px solid transparent',
+      }}
     >
-      <nav className="content-container flex h-[72px] items-center justify-between gap-6">
-        <Link href="/" className="relative z-10 flex shrink-0 items-center">
+      <div
+        className="container"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '72px',
+        }}
+      >
+        <Link href="/">
           <Image
-            src={SITE.logo}
-            alt={`${SITE.name} logo`}
-            width={120}
-            height={36}
-            className="h-8 w-auto object-contain"
+            src={assetPath('/logos/o3xs-logo.png')}
+            alt="O3Xs"
+            width={80}
+            height={28}
+            style={{ objectFit: 'contain' }}
             unoptimized
-            priority
           />
         </Link>
 
-        <div className="hidden items-center gap-10 lg:flex">
-          {NAV_LINKS.map((link) => {
-            const active = pathname === link.href;
-            return (
+        <nav
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '40px',
+          }}
+          className="hide-mobile"
+        >
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                fontSize: '15px',
+                fontWeight: 500,
+                color: 'var(--ink-2)',
+                textDecoration: 'none',
+                letterSpacing: '-0.01em',
+                transition: 'color 0.2s',
+              }}
+              className="nav-link"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <MagneticButton href="/contact" className="btn-primary hide-mobile">
+          Book a Consultation →
+        </MagneticButton>
+
+        <button
+          type="button"
+          className="show-mobile"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+          }}
+        >
+          <div
+            style={{
+              width: 24,
+              height: 2,
+              background: 'var(--ink)',
+              marginBottom: 6,
+              transition: 'transform 0.3s',
+              transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none',
+            }}
+          />
+          <div
+            style={{
+              width: 24,
+              height: 2,
+              background: 'var(--ink)',
+              opacity: menuOpen ? 0 : 1,
+              transition: 'opacity 0.3s',
+            }}
+          />
+          <div
+            style={{
+              width: 24,
+              height: 2,
+              background: 'var(--ink)',
+              marginTop: menuOpen ? 0 : 6,
+              transition: 'transform 0.3s',
+              transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
+            }}
+          />
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            style={{
+              background: 'rgba(255,255,255,0.97)',
+              backdropFilter: 'blur(20px)',
+              borderBottom: '1px solid var(--border)',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+            }}
+          >
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={cn(
-                  "nav-link relative text-[16px] tracking-[-0.01em] transition-colors duration-200",
-                  active
-                    ? "is-active font-semibold text-[var(--indigo)]"
-                    : "font-medium text-[var(--ink-secondary)] hover:text-[var(--indigo)]",
-                )}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  fontSize: '18px',
+                  fontWeight: 500,
+                  color: 'var(--ink)',
+                  textDecoration: 'none',
+                }}
               >
                 {link.label}
               </Link>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-4">
-          <MagneticButton href="/contact" className="hidden sm:inline-flex">
-            Book a Consultation →
-          </MagneticButton>
-
-          <details className="relative lg:hidden">
-            <summary className="cursor-pointer list-none rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium">
-              Menu
-            </summary>
-            <div className="absolute right-0 top-full mt-2 min-w-[200px] rounded-xl border border-[var(--border)] bg-white p-3 shadow-lg">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block rounded-lg px-3 py-2 text-sm hover:bg-[var(--surface)]"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </details>
-        </div>
-      </nav>
-    </header>
+            ))}
+            <a href="/contact" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+              Book a Consultation →
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }

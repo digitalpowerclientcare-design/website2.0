@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { PageTransition } from "@/components/providers/PageTransition";
+import SplashCursor from "@/components/SplashCursor";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -40,10 +41,11 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen antialiased" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <SplashCursor />
         <SmoothScroll>
           <Navbar />
-          <main className="pt-[72px]">
+          <main>
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
