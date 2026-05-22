@@ -58,11 +58,11 @@ export function GradientMesh({ variant = "light" }: GradientMeshProps) {
     const wrap = (hex: string) => ({ value: hexToVec3(hex) });
     if (variant === "dark") {
       return {
-        uColor1: wrap("#18184A"),
-        uColor2: wrap("#5046E5"),
-        uColor3: wrap("#3730A3"),
-        uColor4: wrap("#6257F0"),
-        uColor5: wrap("#18184A"),
+        uColor1: wrap("#1c1e54"),
+        uColor2: wrap("#533afd"),
+        uColor3: wrap("#4434d4"),
+        uColor4: wrap("#665efd"),
+        uColor5: wrap("#1c1e54"),
       };
     }
     return {

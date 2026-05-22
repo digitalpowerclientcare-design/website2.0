@@ -1,85 +1,88 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { assetPath } from '@/lib/assetPath';
+import Image from "next/image";
+import Link from "next/link";
+import { SITE } from "@/lib/site";
 import {
+  GitHubIcon,
+  InstagramIcon,
   LinkedInIcon,
   TwitterIcon,
-  InstagramIcon,
-} from '@/components/ui/SocialIcons';
+} from "@/components/ui/SocialIcons";
+
+const SOCIAL = [
+  { icon: LinkedInIcon, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: TwitterIcon, href: "https://twitter.com", label: "Twitter" },
+  { icon: InstagramIcon, href: "https://instagram.com", label: "Instagram" },
+  { icon: GitHubIcon, href: "https://github.com", label: "GitHub" },
+] as const;
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        background: 'var(--canvas)',
-        borderTop: '1px solid var(--border)',
-        padding: '64px 0 48px',
-      }}
-    >
-      <div className="container home-footer-grid">
-        <div>
+    <footer className="border-t border-[var(--border)] bg-[var(--canvas)]">
+      <div className="content-container grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="space-y-4">
           <Image
-            src={assetPath('/logos/o3xs-logo.png')}
-            alt="O3Xs"
-            width={80}
-            height={28}
+            src={SITE.logo}
+            alt={`${SITE.name} logo`}
+            width={100}
+            height={30}
+            className="h-7 w-auto"
             unoptimized
           />
-          <p
-            style={{
-              fontSize: '14px',
-              color: 'var(--ink-3)',
-              maxWidth: '240px',
-              marginTop: '16px',
-              lineHeight: 1.6,
-            }}
-          >
-            We build AI systems that engineer trust into software delivery.
+          <p className="max-w-xs text-sm text-[var(--ink-secondary)]">
+            {SITE.tagline}
           </p>
-          <p style={{ fontSize: '12px', color: 'var(--ink-4)', marginTop: '24px' }}>
-            © 2026 O3Xs. All rights reserved.
+          <p className="text-xs text-[var(--ink-muted)]">
+            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
         </div>
 
         <div>
-          <p className="t-label" style={{ marginBottom: '16px' }}>Company</p>
-          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <li><Link href="/about" style={{ fontSize: '14px', color: 'var(--ink-2)', textDecoration: 'none' }}>Why We Exist</Link></li>
-            <li><Link href="/consulting" style={{ fontSize: '14px', color: 'var(--ink-2)', textDecoration: 'none' }}>How We Work</Link></li>
-            <li><Link href="/about" style={{ fontSize: '14px', color: 'var(--ink-2)', textDecoration: 'none' }}>About Us</Link></li>
+          <p className="caption mb-4">Company</p>
+          <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
+            <li>
+              <Link href="/about" className="hover:text-[var(--indigo)]">
+                Why We Exist
+              </Link>
+            </li>
+            <li>
+              <Link href="/consulting" className="hover:text-[var(--indigo)]">
+                How We Work
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-[var(--indigo)]">
+                About Us
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <p className="t-label" style={{ marginBottom: '16px' }}>Products</p>
-          <Link href="/forge-ai" style={{ fontSize: '14px', color: 'var(--ink-2)', textDecoration: 'none' }}>FORGE AI</Link>
+          <p className="caption mb-4">Products</p>
+          <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
+            <li>
+              <Link href="/forge-ai" className="hover:text-[var(--indigo)]">
+                FORGE AI
+              </Link>
+            </li>
+          </ul>
         </div>
 
         <div>
-          <p className="t-label" style={{ marginBottom: '16px' }}>Contact</p>
-          <a href="mailto:contact@o3xs.com" style={{ fontSize: '14px', color: 'var(--indigo)', textDecoration: 'none' }}>
-            contact@o3xs.com
+          <p className="caption mb-4">Contact</p>
+          <a
+            href={`mailto:${SITE.email}`}
+            className="text-sm text-[var(--indigo)] hover:underline"
+          >
+            {SITE.email}
           </a>
-          <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-            {[
-              { Icon: LinkedInIcon, href: 'https://linkedin.com', label: 'LinkedIn' },
-              { Icon: TwitterIcon, href: 'https://twitter.com', label: 'Twitter' },
-              { Icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram' },
-            ].map(({ Icon, href, label }) => (
+          <div className="mt-4 flex gap-3">
+            {SOCIAL.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
                 aria-label={label}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '50%',
-                  border: '1px solid var(--border)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--ink-2)',
-                }}
+                className="rounded-full border border-[var(--border)] p-2 text-[var(--ink-secondary)] transition-colors hover:border-[var(--indigo)] hover:text-[var(--indigo)]"
               >
                 <Icon size={16} />
               </a>

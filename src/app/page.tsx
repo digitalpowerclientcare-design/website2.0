@@ -1,27 +1,28 @@
-'use client';
-
-import { HeroSection } from '@/components/home/HeroSection';
-import { PartnersSection } from '@/components/home/PartnersSection';
-import { StatsSection } from '@/components/home/StatsSection';
-import { WhyExistSection } from '@/components/home/WhyExistSection';
-import { ChallengesSection } from '@/components/home/ChallengesSection';
-import { FrameworkSection } from '@/components/home/FrameworkSection';
-import { IndustriesSection } from '@/components/home/IndustriesSection';
-import { ForgeSection } from '@/components/home/ForgeSection';
-import { CtaSection } from '@/components/home/CtaSection';
+import { AmbientShell } from "@/components/sections/home/AmbientShell";
+import { HeroHome } from "@/components/sections/home/HeroHome";
+import { PartnersMarquee } from "@/components/sections/home/PartnersMarquee";
+import { StatsHome } from "@/components/sections/home/StatsHome";
+import { ImageExpansion } from "@/components/sections/home/ImageExpansion";
+import { ProblemsHome } from "@/components/sections/home/ProblemsHome";
+import { FrameworkSticky } from "@/components/sections/home/FrameworkSticky";
+import { HorizontalIndustries } from "@/components/sections/home/HorizontalIndustries";
+import { WorkSamples } from "@/components/sections/home/WorkSamples";
+import { ForgeShowcase } from "@/components/sections/home/ForgeShowcase";
+import { CtaHome } from "@/components/sections/home/CtaHome";
 
 export default function HomePage() {
   return (
-    <>
-      <HeroSection />
-      <PartnersSection />
-      <StatsSection />
-      <WhyExistSection />
-      <ChallengesSection />
-      <FrameworkSection />
-      <IndustriesSection />
-      <ForgeSection />
-      <CtaSection />
-    </>
+    <AmbientShell>
+      <HeroHome />
+      <PartnersMarquee />
+      <StatsHome />
+      <ImageExpansion />
+      <ProblemsHome />
+      <FrameworkSticky />
+      <HorizontalIndustries />
+      <WorkSamples />
+      <ForgeShowcase />
+      <CtaHome />
+    </AmbientShell>
   );
 }
