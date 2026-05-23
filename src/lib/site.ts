@@ -12,6 +12,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/consulting", label: "Consulting" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/forge-ai", label: "FORGE AI" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

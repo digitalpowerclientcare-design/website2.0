@@ -50,6 +50,14 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link
+                href="/case-studies"
+                className="hover:text-[var(--indigo)]"
+              >
+                Case Studies
+              </Link>
+            </li>
+            <li>
               <Link href="/about" className="hover:text-[var(--indigo)]">
                 About Us
               </Link>

@@ -67,7 +67,7 @@ export function WorkSamples() {
 
         <div className="mt-12 flex justify-center">
           <Link
-            href="/consulting"
+            href="/case-studies"
             className="group inline-flex items-center gap-2 text-[15px] font-medium text-[var(--indigo)] transition-opacity hover:opacity-80"
           >
             View all work

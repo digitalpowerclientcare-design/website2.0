@@ -68,7 +68,7 @@ export function StatsGrid({
   titleLineTwo = "Not projections.",
   body = "Real metrics from real engagements. Every number here is verified client outcome data — not a projection, not a forecast, not a marketing claim.",
   linkLabel = "View Case Studies",
-  linkHref = "/consulting",
+  linkHref = "/case-studies",
   background = "canvas",
 }: StatsGridProps) {
   const sectionStyle =
