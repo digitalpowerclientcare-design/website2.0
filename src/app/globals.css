@@ -466,16 +466,35 @@
     width: auto;
     object-fit: contain;
     margin-right: 72px;
-    opacity: 0.55;
+    opacity: 0.85;
+    filter: brightness(0);
     transition: opacity 0.25s ease;
   }
   .partners-marquee__logo:hover {
+    opacity: 1;
+  }
+  .partners-marquee__name {
+    flex-shrink: 0;
+    margin-right: 72px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    opacity: 0.75;
+    white-space: nowrap;
+    transition: opacity 0.25s ease;
+  }
+  .partners-marquee__name:hover {
     opacity: 1;
   }
   @media (max-width: 768px) {
     .partners-marquee__logo {
       height: 32px;
       margin-right: 48px;
+    }
+    .partners-marquee__name {
+      margin-right: 48px;
+      font-size: 1rem;
     }
   }
 

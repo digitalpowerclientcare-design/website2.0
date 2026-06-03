@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SITE } from "@/lib/site";
+import { NAV_LINKS, SITE } from "@/lib/site";
 import {
   GitHubIcon,
   InstagramIcon,
@@ -13,6 +13,13 @@ const SOCIAL = [
   { icon: TwitterIcon, href: "https://twitter.com", label: "Twitter" },
   { icon: InstagramIcon, href: "https://instagram.com", label: "Instagram" },
   { icon: GitHubIcon, href: "https://github.com", label: "GitHub" },
+] as const;
+
+const FOOTER_COMPANY = [
+  { href: "/our-purpose", label: "Our Purpose" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/case-studies", label: "Case Studies" },
+  { href: "/pricing", label: "Pricing" },
 ] as const;
 
 export function Footer() {
@@ -39,45 +46,42 @@ export function Footer() {
         <div>
           <p className="caption mb-4">Company</p>
           <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
-            <li>
-              <Link href="/about" className="hover:text-[var(--indigo)]">
-                Why We Exist
-              </Link>
-            </li>
-            <li>
-              <Link href="/consulting" className="hover:text-[var(--indigo)]">
-                How We Work
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/case-studies"
-                className="hover:text-[var(--indigo)]"
-              >
-                Case Studies
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-[var(--indigo)]">
-                About Us
-              </Link>
-            </li>
+            {FOOTER_COMPANY.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="hover:text-[var(--indigo)]">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
-          <p className="caption mb-4">Products</p>
+          <p className="caption mb-4">Services</p>
           <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
-            <li>
-              <Link href="/forge-ai" className="hover:text-[var(--indigo)]">
-                FORGE AI
-              </Link>
-            </li>
+            {NAV_LINKS.filter(
+              (l) =>
+                l.href === "/consultation" ||
+                l.href === "/forge-ai" ||
+                l.href === "/pricing",
+            ).map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="hover:text-[var(--indigo)]">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
           <p className="caption mb-4">Contact</p>
+          <Link
+            href="/contact"
+            className="mb-3 block text-sm text-[var(--ink-secondary)] hover:text-[var(--indigo)]"
+          >
+            Contact Us
+          </Link>
           <a
             href={`mailto:${SITE.email}`}
             className="text-sm text-[var(--indigo)] hover:underline"

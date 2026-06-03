@@ -1,54 +1,139 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowRight,
   Award,
   Car,
+  Code2,
+  Database,
+  HardHat,
   HeartPulse,
-  Monitor,
+  Hotel,
+  Landmark,
+  MapPin,
   Quote,
   Sparkles,
+  Users,
   Wrench,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
-  CASE_STUDIES,
   DEFAULT_ENGAGEMENT,
+  DEFAULT_FORGE_USE_CASE,
   DEFAULT_VERTICAL,
   ENGAGEMENT_TYPES,
+  FORGE_USE_CASES,
   VERTICALS,
-  getCaseStudy,
+  getConsultationCaseStudy,
+  getForgeCaseStudy,
+  isForgeUseCaseId,
+  isVerticalId,
   type EngagementType,
+  type ForgeUseCaseId,
   type VerticalId,
 } from "@/lib/caseStudies";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 
 const VERTICAL_ICONS = {
   automotive: Car,
-  it: Monitor,
+  software: Code2,
   healthcare: HeartPulse,
+  finance: Landmark,
+  infrastructure: HardHat,
+  hospitality: Hotel,
+} as const;
+
+const FORGE_USE_CASE_ICONS = {
+  "custom-software": Code2,
+  crm: Users,
+  erp: Database,
 } as const;
 
 export function CaseStudyExplorer() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [vertical, setVertical] = useState<VerticalId>(DEFAULT_VERTICAL);
+  const [forgeUseCase, setForgeUseCase] = useState<ForgeUseCaseId>(
+    DEFAULT_FORGE_USE_CASE,
+  );
   const [engagement, setEngagement] =
     useState<EngagementType>(DEFAULT_ENGAGEMENT);
 
-  const study = useMemo(
-    () => getCaseStudy(vertical, engagement) ?? CASE_STUDIES[0],
-    [vertical, engagement],
+  useEffect(() => {
+    const engagementParam = searchParams.get("engagement");
+    if (engagementParam === "forge") {
+      setEngagement("forge");
+      const useParam = searchParams.get("use");
+      if (useParam && isForgeUseCaseId(useParam)) {
+        setForgeUseCase(useParam);
+      }
+      return;
+    }
+
+    setEngagement("consultation");
+    const verticalParam = searchParams.get("vertical");
+    if (verticalParam && isVerticalId(verticalParam)) {
+      setVertical(verticalParam);
+    }
+  }, [searchParams]);
+
+  const study = useMemo(() => {
+    if (engagement === "forge") {
+      return (
+        getForgeCaseStudy(forgeUseCase) ??
+        getForgeCaseStudy(DEFAULT_FORGE_USE_CASE)!
+      );
+    }
+    return (
+      getConsultationCaseStudy(vertical) ??
+      getConsultationCaseStudy(DEFAULT_VERTICAL)!
+    );
+  }, [engagement, vertical, forgeUseCase]);
+
+  const syncUrl = useCallback(
+    (nextEngagement: EngagementType, nextVertical?: VerticalId, nextUse?: ForgeUseCaseId) => {
+      const params = new URLSearchParams();
+      if (nextEngagement === "forge") {
+        params.set("engagement", "forge");
+        params.set("use", nextUse ?? forgeUseCase);
+      } else {
+        params.set("vertical", nextVertical ?? vertical);
+      }
+      router.replace(`/case-studies/?${params.toString()}`, { scroll: false });
+    },
+    [router, vertical, forgeUseCase],
   );
 
-  const onVerticalChange = useCallback((id: VerticalId) => {
-    setVertical(id);
-  }, []);
+  const onEngagementChange = useCallback(
+    (id: EngagementType) => {
+      setEngagement(id);
+      syncUrl(id, vertical, forgeUseCase);
+    },
+    [syncUrl, vertical, forgeUseCase],
+  );
 
-  const onEngagementChange = useCallback((id: EngagementType) => {
-    setEngagement(id);
-  }, []);
+  const onVerticalChange = useCallback(
+    (id: VerticalId) => {
+      setVertical(id);
+      syncUrl("consultation", id);
+    },
+    [syncUrl],
+  );
+
+  const onForgeUseCaseChange = useCallback(
+    (id: ForgeUseCaseId) => {
+      setForgeUseCase(id);
+      syncUrl("forge", vertical, id);
+    },
+    [syncUrl, vertical],
+  );
+
+  const subNavLabel =
+    engagement === "consultation" ? "By industry" : "By product type";
 
   return (
     <section
@@ -57,51 +142,19 @@ export function CaseStudyExplorer() {
       aria-label="Case study browser"
     >
       <div className="content-container mb-10 max-w-2xl">
-        <p className="eyebrow mb-3">By industry</p>
+        <p className="eyebrow mb-3">Case studies</p>
         <h2 className="heading-section">
-          Explore outcomes by vertical and engagement.
+          Explore outcomes by engagement type.
         </h2>
         <p className="body-lg mt-4">
-          Select an industry, then choose whether the engagement was a
-          consulting program or a FORGE AI delivery.
+          Consultation spans six industries with clients in the United States
+          and India. FORGE AI covers custom software development, CRM, and ERP
+          only.
         </p>
       </div>
 
-      {/* Vertical navigation */}
-      <div className="content-container mb-6">
-        <nav
-          className="flex flex-wrap gap-2"
-          aria-label="Industry verticals"
-        >
-          {VERTICALS.map((v) => {
-            const Icon = VERTICAL_ICONS[v.id];
-            const active = vertical === v.id;
-            return (
-              <button
-                key={v.id}
-                type="button"
-                onClick={() => onVerticalChange(v.id)}
-                aria-pressed={active}
-                className={cn(
-                  "inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[14px] font-medium transition-all duration-200",
-                  active
-                    ? "border-[var(--indigo)] bg-[var(--indigo)] text-white shadow-[0_8px_24px_rgba(83,58,253,0.25)]"
-                    : "border-[var(--border)] bg-white text-[var(--ink-secondary)] hover:border-[var(--indigo)]/40 hover:text-[var(--ink)]",
-                )}
-              >
-                <Icon size={16} strokeWidth={1.75} aria-hidden />
-                {v.label}
-              </button>
-            );
-          })}
-        </nav>
-        <p className="mt-3 text-[13px] text-[var(--ink-muted)]">
-          {VERTICALS.find((v) => v.id === vertical)?.tagline}
-        </p>
-      </div>
-
-      {/* Engagement sub-menu */}
-      <div className="content-container mb-12">
+      {/* Engagement type — primary selector */}
+      <div className="content-container mb-8">
         <div
           className="inline-flex rounded-xl border border-[var(--border)] bg-white p-1"
           role="tablist"
@@ -135,6 +188,70 @@ export function CaseStudyExplorer() {
         </p>
       </div>
 
+      {/* Secondary navigation — industry or FORGE product type */}
+      <div className="content-container mb-12">
+        <p className="font-stat mb-3 text-[11px] tracking-[0.1em] text-[var(--ink-muted)] uppercase">
+          {subNavLabel}
+        </p>
+        <nav
+          className="flex flex-wrap gap-2"
+          aria-label={
+            engagement === "consultation"
+              ? "Industry verticals"
+              : "FORGE product types"
+          }
+        >
+          {engagement === "consultation"
+            ? VERTICALS.map((v) => {
+                const Icon = VERTICAL_ICONS[v.id];
+                const active = vertical === v.id;
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => onVerticalChange(v.id)}
+                    aria-pressed={active}
+                    className={cn(
+                      "inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[14px] font-medium transition-all duration-200",
+                      active
+                        ? "border-[var(--indigo)] bg-[var(--indigo)] text-white shadow-[0_8px_24px_rgba(83,58,253,0.25)]"
+                        : "border-[var(--border)] bg-white text-[var(--ink-secondary)] hover:border-[var(--indigo)]/40 hover:text-[var(--ink)]",
+                    )}
+                  >
+                    <Icon size={16} strokeWidth={1.75} aria-hidden />
+                    {v.label}
+                  </button>
+                );
+              })
+            : FORGE_USE_CASES.map((u) => {
+                const Icon = FORGE_USE_CASE_ICONS[u.id];
+                const active = forgeUseCase === u.id;
+                return (
+                  <button
+                    key={u.id}
+                    type="button"
+                    onClick={() => onForgeUseCaseChange(u.id)}
+                    aria-pressed={active}
+                    className={cn(
+                      "inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[14px] font-medium transition-all duration-200",
+                      active
+                        ? "border-[var(--indigo)] bg-[var(--indigo)] text-white shadow-[0_8px_24px_rgba(83,58,253,0.25)]"
+                        : "border-[var(--border)] bg-white text-[var(--ink-secondary)] hover:border-[var(--indigo)]/40 hover:text-[var(--ink)]",
+                    )}
+                  >
+                    <Icon size={16} strokeWidth={1.75} aria-hidden />
+                    {u.label}
+                  </button>
+                );
+              })}
+        </nav>
+        <p className="mt-3 text-[13px] text-[var(--ink-muted)]">
+          {engagement === "consultation"
+            ? VERTICALS.find((v) => v.id === vertical)?.tagline
+            : FORGE_USE_CASES.find((u) => u.id === forgeUseCase)?.tagline}
+        </p>
+      </div>
+
       {/* Case study detail panel */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -145,7 +262,6 @@ export function CaseStudyExplorer() {
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="content-container"
         >
-          {/* Hero image + title */}
           <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-white shadow-[0_16px_48px_rgba(28,30,84,0.08)]">
             <div className="relative aspect-[21/9] min-h-[200px] w-full sm:min-h-[280px]">
               <Image
@@ -177,7 +293,45 @@ export function CaseStudyExplorer() {
             <div className="p-6 md:p-10">
               <p className="body-lg max-w-3xl">{study.description}</p>
 
-              {/* Improvement metrics */}
+              <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--indigo-bg)] px-3 py-1 text-[12px] font-semibold text-[var(--indigo)]">
+                    <MapPin size={12} strokeWidth={2} aria-hidden />
+                    {study.client.region}
+                  </span>
+                  <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1 text-[12px] font-medium text-[var(--ink-secondary)]">
+                    {study.client.segment}
+                  </span>
+                  <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1 text-[12px] font-medium text-[var(--ink-secondary)]">
+                    {study.client.size}
+                  </span>
+                </div>
+                <h4 className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--ink)]">
+                  About the client
+                </h4>
+                <p className="body-base mt-2 max-w-3xl text-[var(--ink-secondary)]">
+                  {study.client.profile}
+                </p>
+                <dl className="mt-5 grid gap-4 border-t border-[var(--border)] pt-5 sm:grid-cols-2">
+                  <div>
+                    <dt className="text-[12px] font-medium tracking-wide text-[var(--ink-muted)] uppercase">
+                      Location
+                    </dt>
+                    <dd className="mt-1 text-[14px] font-medium text-[var(--ink)]">
+                      {study.client.location}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[12px] font-medium tracking-wide text-[var(--ink-muted)] uppercase">
+                      {engagement === "forge" ? "Product type" : "Industry segment"}
+                    </dt>
+                    <dd className="mt-1 text-[14px] font-medium text-[var(--ink)]">
+                      {study.client.segment}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
               <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {study.improvements.map((item) => (
                   <li
@@ -196,7 +350,6 @@ export function CaseStudyExplorer() {
             </div>
           </div>
 
-          {/* Before / After */}
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
             <article className="rounded-2xl border border-[var(--border)] bg-white p-6 md:p-8">
               <span className="font-stat mb-4 inline-block rounded-full bg-[var(--surface)] px-3 py-1 text-[11px] tracking-[0.08em] text-[var(--ink-muted)] uppercase">
@@ -271,7 +424,6 @@ export function CaseStudyExplorer() {
             </article>
           </div>
 
-          {/* Testimonial / winning remark */}
           <blockquote className="mt-12 rounded-3xl border border-[var(--border)] bg-[var(--brand-dark)] p-8 text-white md:p-10">
             <div className="flex flex-wrap items-start justify-between gap-6">
               <Quote
@@ -310,25 +462,57 @@ export function CaseStudyExplorer() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Quick jump to other combinations */}
       <div className="content-container mt-16">
-        <p className="eyebrow mb-4">More in this vertical</p>
+        <p className="eyebrow mb-4">
+          {engagement === "consultation"
+            ? "Switch engagement"
+            : "More FORGE use cases"}
+        </p>
         <div className="flex flex-wrap gap-3">
-          {ENGAGEMENT_TYPES.filter((e) => e.id !== engagement).map((e) => (
+          {engagement === "consultation" ? (
             <button
-              key={e.id}
               type="button"
-              onClick={() => onEngagementChange(e.id)}
+              onClick={() => onEngagementChange("forge")}
               className="group inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[14px] font-medium text-[var(--ink)] transition-all hover:border-[var(--indigo)]/40 hover:shadow-[0_8px_24px_rgba(83,58,253,0.08)]"
             >
-              View {e.label} case
+              View FORGE AI case studies
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-0.5"
                 aria-hidden
               />
             </button>
-          ))}
+          ) : (
+            <>
+              {FORGE_USE_CASES.filter((u) => u.id !== forgeUseCase).map((u) => (
+                <button
+                  key={u.id}
+                  type="button"
+                  onClick={() => onForgeUseCaseChange(u.id)}
+                  className="group inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[14px] font-medium text-[var(--ink)] transition-all hover:border-[var(--indigo)]/40 hover:shadow-[0_8px_24px_rgba(83,58,253,0.08)]"
+                >
+                  View {u.label}
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => onEngagementChange("consultation")}
+                className="group inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[14px] font-medium text-[var(--ink)] transition-all hover:border-[var(--indigo)]/40 hover:shadow-[0_8px_24px_rgba(83,58,253,0.08)]"
+              >
+                View Consultation cases
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-0.5"
+                  aria-hidden
+                />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </section>

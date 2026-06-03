@@ -10,12 +10,13 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/consulting", label: "Consulting" },
+  { href: "/our-purpose", label: "Our Purpose" },
+  { href: "/consultation", label: "Consultation" },
+  { href: "/forge-ai", label: "Forge AI" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/case-studies", label: "Case Studies" },
-  { href: "/forge-ai", label: "FORGE AI" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/contact", label: "Contact Us" },
 ] as const;
 
 export const STATS = [

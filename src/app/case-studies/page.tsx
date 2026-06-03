@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { CaseStudyExplorer } from "@/components/sections/case-studies/CaseStudyExplorer";
 import { CtaBanner } from "@/components/sections/shared/CtaBanner";
@@ -8,7 +9,7 @@ import { StatsGrid } from "@/components/sections/shared/StatsGrid";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Verified enterprise outcomes across automotive, IT, and healthcare — from consulting engagements to FORGE AI delivery programs.",
+    "Verified enterprise outcomes — consultation across six industries, and FORGE AI for custom software, CRM, and ERP delivery.",
 };
 
 const BANNER_IMAGE =
@@ -50,9 +51,9 @@ export default function CaseStudiesPage() {
             </span>
           </h1>
           <p className="body-lg mt-6 max-w-2xl text-white/75">
-            Real engagements across automotive, IT, and healthcare — from
-            diagnostic-led consulting to FORGE AI production delivery. Every
-            metric below was executive-verified, not projected.
+            Consultation engagements span six industries with clients in the
+            United States and India. FORGE AI case studies cover custom software
+            development, CRM, and ERP — the product types we deliver against.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <TextRollButton
@@ -71,7 +72,15 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* Interactive case study browser */}
-      <CaseStudyExplorer />
+      <Suspense
+        fallback={
+          <div className="content-container py-20 text-[var(--ink-muted)]">
+            Loading case studies…
+          </div>
+        }
+      >
+        <CaseStudyExplorer />
+      </Suspense>
 
       {/* Aggregate proof */}
       <StatsGrid
