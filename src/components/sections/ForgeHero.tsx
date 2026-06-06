@@ -31,7 +31,7 @@ export function ForgeHero() {
             Your team is using AI to write code.
           </h1>
           <p className="heading-hero gradient-text mb-6">
-            FORGE makes sure it&apos;s safe to ship.
+            Forge AI makes sure it&apos;s safe to ship.
           </p>
           <p className="body-lg mb-10 text-white/75">
             45% of AI-generated code has security vulnerabilities. FORGE is the
@@ -39,7 +39,7 @@ export function ForgeHero() {
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <MagneticButton href="/contact" variant="white">
-              Request Beta Access →
+              Request Forge AI Beta Access →
             </MagneticButton>
             <Link href="#how-it-works" className="btn-ghost text-white/90">
               See how it works ↓

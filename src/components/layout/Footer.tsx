@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import {
+  FOOTER_ARTICLE_LINKS,
+  FOOTER_SERVICE_LINKS,
+} from "@/lib/navContent";
+import { SITE } from "@/lib/site";
 import {
   GitHubIcon,
   InstagramIcon,
@@ -57,14 +61,19 @@ export function Footer() {
         </div>
 
         <div>
-          <p className="caption mb-4">Services</p>
+          <p className="caption mb-4">Solutions</p>
           <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
-            {NAV_LINKS.filter(
-              (l) =>
-                l.href === "/consultation" ||
-                l.href === "/forge-ai" ||
-                l.href === "/pricing",
-            ).map((link) => (
+            {FOOTER_SERVICE_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="hover:text-[var(--indigo)]">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="caption mb-4 mt-6">Articles</p>
+          <ul className="space-y-2 text-sm text-[var(--ink-secondary)]">
+            {FOOTER_ARTICLE_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="hover:text-[var(--indigo)]">
                   {link.label}

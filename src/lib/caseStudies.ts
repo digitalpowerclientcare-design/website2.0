@@ -508,7 +508,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         "A global tier-1 automotive components manufacturer with fourteen North American plants. Demand signals lived in spreadsheets, expedite costs rose quarter over quarter, and executive reporting lagged operations by weeks with no unified supplier risk view.",
     },
     heroImage:
-      "https://images.unsplash.com/photo-1565043589221-1a6fd000f4d8?auto=format&fit=crop&q=85&w=1400",
+      "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=85&w=1400",
     bannerImage:
       "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=85&w=1600",
     description:
@@ -535,7 +535,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         "Leadership dashboard refreshed daily with audit-ready lineage",
       ],
       image:
-        "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=85&w=900",
+        "https://images.unsplash.com/photo-1567789884557-4b88940c8dbb?auto=format&fit=crop&q=85&w=900",
     },
     improvements: [
       { label: "Planning cycle time", value: "−67%" },
@@ -641,7 +641,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         "Back-office handoffs duplicated 30% of guest communication",
       ],
       image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=85&w=900",
+        "https://images.unsplash.com/photo-1520250497590-8c8d0f9a81e3?auto=format&fit=crop&q=85&w=900",
     },
     after: {
       headline: "Orchestrated guest operations with regional visibility",

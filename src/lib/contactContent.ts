@@ -50,7 +50,7 @@ const CONSULTATION_PAGE = {
   submitLabel: "Submit consultation request",
   trustTitle: "Confidential. No obligation. No sales pitch.",
   trustBody:
-    "The diagnostic call is purely consultative. You'll leave with a written report you can use whether or not you engage with O3Xs further. Our diagnostic process is covered by mutual NDA.",
+    "The diagnostic call is purely consultative — you'll leave with a written report you can use with or without O3Xs, under mutual NDA.",
 } as const;
 
 function forgeIncluded(kind: ForgeRequestKind, planLabel?: string, billing?: BillingPeriod): readonly string[] {
@@ -68,8 +68,8 @@ function forgeIncluded(kind: ForgeRequestKind, planLabel?: string, billing?: Bil
 
   if (kind === "beta") {
     return [
-      "Private beta cohort onboarding",
-      "Technical demo tailored to your stack",
+      "Private Beta cohort onboarding",
+      "Technical Demo tailored to your stack",
       "Repo connection and pipeline walkthrough",
       "Introductory pricing for early adopters",
     ];
@@ -112,18 +112,18 @@ function forgePageCopy(
 
   if (kind === "beta") {
     return {
-      eyebrow: "Forge AI · Private beta",
-      title: "Request beta access.",
+      eyebrow: "Forge AI · Private Beta",
+      title: "Request Forge AI Beta Access",
       titleAccent: "Ship verified features faster.",
       description:
-        "FORGE is in private beta with select engineering teams. Share your stack and team context so we can schedule a technical demo and onboarding path.",
+        "Forge AI is in private Beta with select engineering teams. Share your stack and team context so we can schedule a Technical Demo and onboarding path.",
       included,
-      formTitle: "Request Forge beta access",
+      formTitle: "Request Forge AI Beta Access",
       formSubtitle: summary,
-      submitLabel: "Request beta access",
+      submitLabel: "Request Forge AI Beta Access",
       trustTitle: "Early adopter program.",
       trustBody:
-        "Beta spots are limited. We'll review your submission and respond within one business day with next steps for a technical demo and repo setup.",
+        "Beta spots are limited. We'll review your submission and respond within one business day with next steps for a Technical Demo and repo setup.",
     };
   }
 
@@ -195,7 +195,7 @@ export function resolveContactContext(searchParams: URLSearchParams): ContactCon
   }
 
   if (interest === "forge-beta") {
-    const summary = "Private beta · technical demo";
+    const summary = "Private Beta · Technical Demo";
     return {
       variant: "forge",
       interest,

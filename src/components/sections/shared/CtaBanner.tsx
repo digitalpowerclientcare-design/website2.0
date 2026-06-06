@@ -84,7 +84,7 @@ export function CtaBanner({
               href={ctaHref}
               label={ctaLabel}
               variant="white"
-              className="btn-glow-pulse w-full sm:w-auto"
+              className="btn-glow-pulse w-full justify-center sm:w-auto"
             />
           </motion.div>
         ) : (

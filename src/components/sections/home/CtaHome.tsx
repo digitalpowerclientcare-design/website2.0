@@ -10,7 +10,7 @@ export function CtaHome() {
       title="Book a consultation."
       subtitle="A structured session to map where AI-led business process automation can recover value — with a Performance Diagnostic Report and implementation plan included."
       ctaLabel="Book a Consultation"
-      ctaHref="/contact"
+      ctaHref="/contact?interest=consultation"
       image={CONSULTATION_CTA_IMAGE}
       imageAlt="Senior executives in a consultation session reviewing business performance"
     />

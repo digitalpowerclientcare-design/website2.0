@@ -55,13 +55,16 @@ export default function OurPurposePage() {
         </div>
       </section>
 
-      <section className="bg-[var(--surface)] py-24 md:py-28">
-        <div className="content-container grid gap-12 lg:grid-cols-[3fr_2fr] lg:items-start">
-          <div>
+      <section className="section-padding bg-[var(--surface)]">
+        <div className="content-container grid gap-12 lg:grid-cols-[minmax(260px,340px)_1fr_minmax(0,380px)] lg:items-start lg:gap-14">
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="eyebrow mb-3">The gap we close</p>
-            <h2 className="heading-section">
-              Enterprises don&apos;t lack AI. They lack ownership.
+            <h2 className="heading-section text-[var(--ink)]">
+              {PURPOSE_BELIEFS[0].title}
             </h2>
+            <p className="body-base mt-4 text-[var(--ink-secondary)]">
+              {PURPOSE_BELIEFS[0].body}
+            </p>
             <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-[var(--border)] lg:hidden">
               <Image
                 src={images.accountability}
@@ -72,14 +75,6 @@ export default function OurPurposePage() {
                 className="object-cover"
               />
             </div>
-            <div className="mt-8 space-y-5 text-[16px] leading-relaxed text-[var(--ink-secondary)]">
-              {PURPOSE_BELIEFS.map((belief) => (
-                <div key={belief.title}>
-                  <p className="font-medium text-[var(--ink)]">{belief.title}</p>
-                  <p className="mt-2">{belief.body}</p>
-                </div>
-              ))}
-            </div>
             <div className="mt-10">
               <TextRollButton
                 href="/consultation"
@@ -89,7 +84,21 @@ export default function OurPurposePage() {
             </div>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-6">
+            {PURPOSE_BELIEFS.slice(1).map((belief) => (
+              <article
+                key={belief.title}
+                className="rounded-2xl border border-[var(--border)] bg-white p-7 md:p-8"
+              >
+                <h3 className="text-xl font-medium tracking-[-0.015em] text-[var(--ink)]">
+                  {belief.title}
+                </h3>
+                <p className="body-base mt-3">{belief.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="space-y-5 lg:col-start-3">
             <div className="relative hidden aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_12px_40px_rgba(28,30,84,0.08)] lg:block">
               <Image
                 src={images.accountability}
@@ -120,7 +129,7 @@ export default function OurPurposePage() {
         </div>
       </section>
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container mb-12 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
           <div className="max-w-2xl">
             <p className="eyebrow mb-3">What we commit to</p>

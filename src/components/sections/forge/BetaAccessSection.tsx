@@ -8,7 +8,7 @@ export function BetaAccessSection() {
   return (
     <section
       id="beta"
-      className="relative overflow-hidden py-24 md:py-28"
+      className="section-padding relative overflow-hidden"
       style={{ backgroundColor: "var(--brand-dark)" }}
     >
       <div
@@ -30,10 +30,10 @@ export function BetaAccessSection() {
           <p className="mb-3 text-[11px] font-medium tracking-[0.22em] text-white/60 uppercase">
             Ready to ship safely?
           </p>
-          <h2 className="heading-display text-white">Request beta access.</h2>
+          <h2 className="heading-display text-white">Request Forge AI Beta Access</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-white/70">
-            FORGE is in private beta with select engineering teams. Share your
-            stack on our contact form and we&apos;ll schedule a technical demo.
+            Forge AI is in private Beta with select engineering teams. Share your
+            stack on our contact form and we&apos;ll schedule a Technical Demo.
           </p>
         </motion.div>
 
@@ -46,15 +46,15 @@ export function BetaAccessSection() {
         >
           <Link
             href="/contact?interest=forge-beta"
-            className="group inline-flex items-center gap-2 rounded-full bg-white py-3 pr-2 pl-7 text-[15px] font-medium text-[#0A0A14] transition-colors duration-300 hover:bg-white/90"
+            className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white py-3 pr-2 pl-7 text-[15px] font-medium text-[#0A0A14] transition-colors duration-300 hover:bg-white/90"
           >
-            Request beta access
+            Request Forge AI Beta Access
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] text-white transition-transform duration-500 group-hover:-rotate-45">
               <ArrowRight className="h-4 w-4" />
             </span>
           </Link>
           <p className="text-[12px] text-white/45">
-            Opens the Forge beta form — we&apos;ll only use your details for onboarding and demo scheduling.
+            Opens the Forge AI Beta form — we&apos;ll only use your details for onboarding and demo scheduling.
           </p>
         </motion.div>
       </div>

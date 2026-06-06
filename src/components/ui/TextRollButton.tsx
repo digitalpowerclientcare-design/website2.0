@@ -18,10 +18,10 @@ export function TextRollButton({
   className,
 }: TextRollButtonProps) {
   const roll = (
-    <span className="flex h-5 flex-col overflow-hidden">
+    <span className="flex h-6 flex-col overflow-hidden">
       <span className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
-        <span className="leading-5">{label}</span>
-        <span className="leading-5">{label}</span>
+        <span className="leading-6">{label}</span>
+        <span className="leading-6">{label}</span>
       </span>
     </span>
   );
@@ -59,7 +59,7 @@ export function TextRollButton({
     <Link
       href={href}
       className={cn(
-        "group inline-flex items-center gap-2 rounded-full py-2.5 pl-6 pr-2 text-[15px] font-medium transition-colors duration-300",
+        "group inline-flex items-center gap-2.5 rounded-full py-3 pl-7 pr-2.5 text-[16px] font-semibold tracking-[-0.01em] transition-colors duration-300",
         styles,
         className,
       )}
@@ -67,7 +67,7 @@ export function TextRollButton({
       {roll}
       <span
         className={cn(
-          "flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-500 group-hover:-rotate-45",
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform duration-500 group-hover:-rotate-45",
           iconStyles,
         )}
       >

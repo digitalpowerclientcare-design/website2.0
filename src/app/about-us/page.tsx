@@ -33,12 +33,12 @@ export default function AboutUsPage() {
           aria-hidden
         />
         <div className="content-container relative z-10 grid items-center gap-12 py-24 md:py-32 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="max-w-xl">
+          <div className="min-w-0">
             <p className="eyebrow mb-4">About Us</p>
-            <h1 className="heading-display text-[var(--ink)]">
+            <h1 className="heading-display whitespace-nowrap text-[clamp(1.25rem,3.6vw,3.75rem)] text-[var(--ink)]">
               An AI engineering studio.
             </h1>
-            <h2 className="heading-display mt-1 font-light text-[var(--ink-muted)]">
+            <h2 className="mt-1 max-w-full whitespace-nowrap font-light leading-[1.04] tracking-[-0.04em] text-[clamp(0.875rem,1.9vw,1.75rem)] text-[var(--ink-muted)]">
               Not a consultancy. Not an agency.
             </h2>
             <p className="body-lg mt-8 max-w-2xl">
@@ -89,7 +89,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-[var(--border)] shadow-[0_16px_48px_rgba(28,30,84,0.08)]">
             <Image
@@ -155,7 +155,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="bg-[var(--surface)] py-24 md:py-28">
+      <section className="section-padding bg-[var(--surface)]">
         <div className="content-container mb-12 max-w-2xl">
           <p className="eyebrow mb-3">Our principles</p>
           <h2 className="heading-section">
@@ -180,7 +180,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <div>
             <p className="eyebrow mb-3">Our team</p>

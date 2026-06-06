@@ -106,7 +106,7 @@ export function ForgePipeline() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="relative bg-[var(--surface-alt)] py-24 md:py-28"
+      className="section-padding relative bg-[var(--surface-alt)]"
     >
       <div className="content-container mb-14 max-w-3xl">
         <p className="eyebrow mb-3">Six agents. One verified output.</p>

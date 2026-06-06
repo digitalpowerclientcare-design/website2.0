@@ -71,7 +71,7 @@ export function ForgeDarkHero() {
               color: "transparent",
             }}
           >
-            Forge makes sure it&apos;s safe to ship.
+            Forge AI makes sure it&apos;s safe to ship.
           </h1>
 
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70">
@@ -87,9 +87,9 @@ export function ForgeDarkHero() {
             >
               <Link
                 href="/contact?interest=forge-beta"
-                className="group inline-flex items-center gap-2 rounded-full bg-white py-3 pr-2 pl-7 text-[15px] font-medium text-[#0A0A14] transition-colors duration-300 hover:bg-white/90"
+                className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white py-3 pr-2 pl-7 text-[15px] font-medium text-[#0A0A14] transition-colors duration-300 hover:bg-white/90"
               >
-                Request Beta Access
+                Request Forge AI Beta Access
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] text-white transition-transform duration-500 group-hover:-rotate-45">
                   <ArrowRight className="h-4 w-4" />
                 </span>

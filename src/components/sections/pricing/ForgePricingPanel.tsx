@@ -11,7 +11,7 @@ import {
   FORGE_TRIAL,
   FORGE_VALUE_PROPOSITION,
   getComparisonRows,
-  PRICING_FAQ,
+  FORGE_PRICING_FAQ,
   type BillingPeriod,
 } from "@/lib/pricingContent";
 
@@ -22,7 +22,7 @@ export function ForgePricingPanel() {
   return (
     <>
       <section
-        className="bg-[var(--surface)] py-24 md:py-28"
+        className="section-padding bg-[var(--surface)]"
         aria-labelledby="forge-pricing-heading"
       >
         <div className="content-container">
@@ -222,7 +222,7 @@ export function ForgePricingPanel() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24" aria-labelledby="pricing-comparison">
+      <section className="section-padding bg-white" aria-labelledby="pricing-comparison">
         <div className="content-container">
           <h2 id="pricing-comparison" className="heading-section mb-10">
             Forge plan comparison
@@ -257,18 +257,21 @@ export function ForgePricingPanel() {
         </div>
       </section>
 
-      <section className="bg-[var(--surface)] py-20 md:py-24" aria-labelledby="pricing-faq">
+      <section className="section-padding bg-[var(--surface)]" aria-labelledby="pricing-faq">
         <div className="content-container max-w-3xl">
-          <h2 id="pricing-faq" className="heading-section mb-10">
+          <h2 id="pricing-faq" className="heading-section mb-8">
             Forge pricing FAQ
           </h2>
-          <dl className="space-y-8">
-            {PRICING_FAQ.map((item) => (
-              <div key={item.question}>
-                <dt className="text-[17px] font-medium tracking-[-0.01em] text-[var(--ink)]">
+          <dl className="space-y-4">
+            {FORGE_PRICING_FAQ.map((item) => (
+              <div
+                key={item.question}
+                className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white"
+              >
+                <dt className="border-l-4 border-[var(--indigo)] bg-[var(--indigo-bg)]/60 px-5 py-4 text-[16px] font-semibold tracking-[-0.01em] text-[var(--ink)] md:px-6 md:text-[17px]">
                   {item.question}
                 </dt>
-                <dd className="body-base mt-2">{item.answer}</dd>
+                <dd className="body-base px-5 py-4 md:px-6">{item.answer}</dd>
               </div>
             ))}
           </dl>

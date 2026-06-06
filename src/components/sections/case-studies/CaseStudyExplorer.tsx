@@ -138,7 +138,7 @@ export function CaseStudyExplorer() {
   return (
     <section
       id="case-studies"
-      className="bg-[var(--surface)] py-20 md:py-28"
+      className="section-padding bg-[var(--surface)]"
       aria-label="Case study browser"
     >
       <div className="content-container mb-10 max-w-2xl">

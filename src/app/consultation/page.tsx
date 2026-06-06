@@ -66,12 +66,12 @@ export default function ConsultationPage() {
         </div>
       </section>
 
-      <section className="border-y border-[var(--border)] bg-white py-20 md:py-24">
+      <section className="section-padding border-y border-[var(--border)] bg-white">
         <div className="content-container">
           <div className="mb-14 max-w-2xl">
             <p className="eyebrow mb-3">How we deliver</p>
             <h2 className="heading-section">
-              Three pillars. One accountability model.
+              Three pillars, one accountability model
             </h2>
           </div>
           <div className="grid gap-8 lg:grid-cols-3">
@@ -115,7 +115,7 @@ export default function ConsultationPage() {
         />
       </div>
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container mb-12 max-w-2xl">
           <p className="eyebrow mb-3">Who we serve</p>
           <h2 className="heading-section">

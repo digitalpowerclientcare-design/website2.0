@@ -56,7 +56,7 @@ export default function ForgeAiPage() {
     <>
       <ForgeDarkHero />
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container mb-12 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-end">
           <div className="max-w-3xl">
             <p className="eyebrow mb-3">The problem</p>
@@ -122,7 +122,7 @@ export default function ForgeAiPage() {
 
       <ForgePipeline />
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container mb-12 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
           <div className="relative order-2 aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--border)] shadow-[0_16px_48px_rgba(28,30,84,0.08)] lg:order-1">
             <Image

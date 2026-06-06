@@ -9,12 +9,15 @@ export const SITE = {
   logo: assetPath("/logos/o3xs-logo.png"),
 } as const;
 
+/** @deprecated Use NAV_ITEMS from navContent.ts for navigation */
 export const NAV_LINKS = [
   { href: "/our-purpose", label: "Our Purpose" },
   { href: "/consultation", label: "Consultation" },
   { href: "/forge-ai", label: "Forge AI" },
   { href: "/pricing", label: "Pricing" },
   { href: "/case-studies", label: "Case Studies" },
+  { href: "/blog", label: "Blog" },
+  { href: "/publications", label: "Publications" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
 ] as const;
@@ -160,17 +163,17 @@ export const FORGE_AGENTS = [
 ] as const;
 
 export const BLEEDING_OPTIONS = [
-  "SDLC / Engineering inefficiency",
-  "Marketing spend waste",
-  "Operations / process bottlenecks",
-  "Legal / compliance overhead",
-  "Customer support costs",
-  "Other",
+  "SDLC / Engineering inefficiency.",
+  "Marketing spend waste.",
+  "Operations / process bottlenecks.",
+  "Legal / compliance overhead.",
+  "Customer support costs.",
+  "Other.",
 ] as const;
 
 export const COMPANY_SIZES = [
-  "<$1M",
-  "$1M–$50M",
-  "$50M–$500M",
-  "$500M+",
+  "<$1M Revenue",
+  "$1M–$50M Revenue",
+  "$50M–$500M Revenue",
+  "$500M+ Revenue",
 ] as const;

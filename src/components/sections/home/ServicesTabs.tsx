@@ -16,8 +16,10 @@ import {
   CONSULTATION_VALUES,
   FORGE_HIGHLIGHTS,
   FORGE_PIPELINE,
+  SERVICE_PATHS,
   type ServiceId,
 } from "@/lib/homeContent";
+import { cn } from "@/lib/utils";
 import { FORGE_AGENTS } from "@/lib/site";
 
 type ServicesTabsProps = {
@@ -35,18 +37,7 @@ export function ServicesTabs({
     onTabChange?.(tab);
   };
 
-  const tabs: { id: ServiceId; label: string; description: string }[] = [
-    {
-      id: "consultation",
-      label: "Consultation",
-      description: "Cross-industry business performance",
-    },
-    {
-      id: "forge",
-      label: "FORGE AI",
-      description: "Enterprise AI SDLC platform",
-    },
-  ];
+  const paths = [SERVICE_PATHS.consultation, SERVICE_PATHS.forge] as const;
 
   return (
     <section
@@ -57,60 +48,142 @@ export function ServicesTabs({
       <div className="dot-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden />
 
       <div className="content-container relative z-10">
-        <div className="mb-12 flex flex-col gap-8 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="eyebrow mb-3">Two distinct capabilities</p>
-            <h2 className="heading-section mb-4">
-              One operator.{" "}
-              <span className="text-[var(--ink-muted)]">
-                Two paths to measurable impact.
-              </span>
-            </h2>
-            <p className="body-lg">
-              Consultation transforms how your business operates — any industry,
-              any function. FORGE AI transforms how your engineering organization
-              ships software. Same standard of accountability. Different domains
-              of execution.
-            </p>
-          </div>
+        <div className="mb-10 max-w-3xl lg:mb-12">
+          <p className="eyebrow mb-3">Two distinct capabilities</p>
+          <h2 className="heading-section mb-4">
+            One operator.{" "}
+            <span className="text-[var(--ink-muted)]">
+              Two paths to measurable impact.
+            </span>
+          </h2>
+          <p className="body-lg">
+            O3Xs runs two separate services under one accountability standard.
+            Choose the path that matches your problem — business performance or
+            software delivery.
+          </p>
+        </div>
 
-          <div
-            role="tablist"
-            aria-label="O3Xs services"
-            className="inline-flex shrink-0 rounded-2xl border border-[var(--border)] bg-white p-1.5 shadow-[0_4px_24px_rgba(83,58,253,0.06)]"
-          >
-            {tabs.map((tab) => (
+        <div
+          role="tablist"
+          aria-label="O3Xs services"
+          className="mb-8 grid gap-5 lg:grid-cols-2 lg:mb-10"
+        >
+          {paths.map((path) => {
+            const isForge = path.id === "forge";
+            const selected = activeTab === path.id;
+            return (
               <button
-                key={tab.id}
+                key={path.id}
                 type="button"
                 role="tab"
-                aria-selected={activeTab === tab.id}
-                aria-controls={`panel-${tab.id}`}
-                id={`tab-${tab.id}`}
-                onClick={() => selectTab(tab.id)}
-                className={`relative rounded-xl px-5 py-3 text-left transition-colors md:min-w-[160px] ${
-                  activeTab === tab.id
-                    ? "text-[var(--ink)]"
-                    : "text-[var(--ink-muted)] hover:text-[var(--ink-secondary)]"
-                }`}
-              >
-                {activeTab === tab.id && (
-                  <motion.span
-                    layoutId="service-tab-bg"
-                    className="absolute inset-0 rounded-xl bg-[var(--indigo-bg)]"
-                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                  />
+                aria-selected={selected}
+                aria-controls={`panel-${path.id}`}
+                id={`tab-${path.id}`}
+                onClick={() => selectTab(path.id)}
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border bg-white p-6 text-left transition-all duration-300 md:p-8",
+                  selected
+                    ? isForge
+                      ? "border-[var(--indigo)] shadow-[0_20px_60px_rgba(83,58,253,0.14)]"
+                      : "border-[var(--emerald)] shadow-[0_20px_60px_rgba(16,185,129,0.12)]"
+                    : "border-[var(--border)] hover:border-[var(--ink-muted)]/30 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]",
                 )}
-                <span className="relative block text-sm font-medium">
-                  {tab.label}
-                </span>
-                <span className="relative mt-0.5 hidden text-[11px] text-[var(--ink-muted)] sm:block">
-                  {tab.description}
+              >
+                <div
+                  className={cn(
+                    "absolute top-0 left-0 h-full w-1 transition-colors",
+                    isForge ? "bg-[var(--indigo)]" : "bg-[var(--emerald)]",
+                    selected ? "opacity-100" : "opacity-40 group-hover:opacity-70",
+                  )}
+                  aria-hidden
+                />
+
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <span
+                    className={cn(
+                      "rounded-full px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase",
+                      isForge
+                        ? "bg-[var(--indigo-bg)] text-[var(--indigo)]"
+                        : "bg-[var(--emerald)]/10 text-[var(--emerald)]",
+                    )}
+                  >
+                    {path.pathLabel}
+                  </span>
+                  {selected && (
+                    <span className="rounded-full bg-[var(--ink)] px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-white uppercase">
+                      Selected
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="mt-4 text-[22px] font-semibold tracking-[-0.02em] text-[var(--ink)]">
+                  {path.title}
+                </h3>
+                <p className="mt-1 text-[13px] font-medium text-[var(--indigo)]">
+                  {path.subtitle}
+                </p>
+
+                <p className="mt-4 text-[11px] font-semibold tracking-[0.12em] text-[var(--ink-muted)] uppercase">
+                  {path.domain}
+                </p>
+                <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink-secondary)]">
+                  {path.transforms}
+                </p>
+
+                <p className="mt-4 rounded-xl bg-[var(--surface)] px-4 py-3 text-[13px] leading-relaxed text-[var(--ink-secondary)]">
+                  <span className="font-semibold text-[var(--ink)]">Unique to this path: </span>
+                  {path.differentiator}
+                </p>
+
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {path.outcomes.map((outcome) => (
+                    <li
+                      key={outcome}
+                      className={cn(
+                        "rounded-md px-2.5 py-1 text-[11px] font-medium",
+                        isForge
+                          ? "bg-[var(--indigo-bg)] text-[var(--indigo)]"
+                          : "bg-[var(--emerald)]/8 text-[var(--emerald)]",
+                      )}
+                    >
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mt-4 text-[12px] italic text-[var(--ink-muted)]">
+                  {path.notThis}
+                </p>
+
+                <span
+                  className={cn(
+                    "mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold transition-colors",
+                    isForge
+                      ? "text-[var(--indigo)] group-hover:text-[var(--indigo-deep)]"
+                      : "text-[var(--emerald)] group-hover:text-[#059669]",
+                  )}
+                >
+                  {selected ? "View details below" : `Explore ${path.title}`}
+                  <ArrowRight
+                    size={14}
+                    className={cn(
+                      "transition-transform",
+                      selected && "rotate-90",
+                    )}
+                  />
                 </span>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
+
+        <p className="caption mb-10 text-center text-[var(--ink-muted)] lg:mb-12">
+          Same O3Xs accountability —{" "}
+          <span className="font-medium text-[var(--ink-secondary)]">
+            different domains of execution
+          </span>
+          .
+        </p>
 
         <AnimatePresence mode="wait">
           {activeTab === "consultation" ? (
@@ -170,8 +243,8 @@ function ConsultationPanel({
             </p>
           </div>
           <TextRollButton
-            href="/consulting"
-            label="View Consulting"
+            href="/consultation"
+            label="View Consultation"
             variant="ghost"
           />
         </div>
@@ -213,7 +286,7 @@ function ConsultationPanel({
         <p className="caption mt-6 text-center text-[var(--ink-muted)]">
           Extended framework includes Innovate and Scale phases for institutional
           capability building.{" "}
-          <Link href="/consulting" className="text-[var(--indigo)] hover:underline">
+          <Link href="/consultation" className="text-[var(--indigo)] hover:underline">
             See full methodology →
           </Link>
         </p>
@@ -274,16 +347,18 @@ function ConsultationPanel({
         </div>
       </div>
 
-      <p className="caption text-center text-[var(--ink-muted)]">
-        Need AI-native software delivery instead?{" "}
-        <button
-          type="button"
-          onClick={onSwitchToForge}
-          className="text-[var(--indigo)] hover:underline"
-        >
-          Explore FORGE AI →
-        </button>
-      </p>
+      <div className="border-t border-[var(--border)] pt-12">
+        <p className="caption text-center text-[var(--ink-muted)]">
+          Need AI-native software delivery instead?{" "}
+          <button
+            type="button"
+            onClick={onSwitchToForge}
+            className="text-[var(--indigo)] hover:underline"
+          >
+            Explore FORGE AI →
+          </button>
+        </p>
+      </div>
     </div>
   );
 }
@@ -318,7 +393,12 @@ function ForgePanel({
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <TextRollButton href="/forge-ai" label="Explore FORGE AI" variant="indigo" />
-            <TextRollButton href="/contact?interest=forge-beta" label="Request Private Beta" variant="ghost" />
+            <TextRollButton
+              href="/contact?interest=forge-beta"
+              label="Request Forge AI Beta Access"
+              variant="ghost"
+              className="whitespace-nowrap"
+            />
           </div>
         </div>
 

@@ -157,8 +157,8 @@ export const PAGE_IMAGES = {
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=85&w=1600",
     heroAlt: "Enterprise team collaborating on AI engineering strategy",
     team:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=85&w=1200",
-    teamAlt: "Operators reviewing delivery outcomes in a working session",
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=85&w=1200",
+    teamAlt: "Enterprise operators in a strategy working session",
     capabilities:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=85&w=1400",
     capabilitiesAlt: "Engineering workspace — consultation and software delivery",
@@ -171,8 +171,8 @@ export const PAGE_IMAGES = {
       "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=85&w=1200",
     accountabilityAlt: "Leadership reviewing performance metrics and ownership",
     operate:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=85&w=1200",
-    operateAlt: "Operational dashboard — sustained performance after go-live",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=85&w=1200",
+    operateAlt: "Consulting and client teams collaborating on an engagement",
   },
   forgeAi: {
     pipeline: assetPath("/forge/pipeline.png"),

@@ -10,19 +10,19 @@ import {
 } from "@/lib/contactContent";
 
 const BLEEDING_OPTIONS = [
-  "SDLC / Engineering inefficiency",
-  "Marketing spend waste",
-  "Operations / process bottlenecks",
-  "Legal / compliance overhead",
-  "Customer support costs",
-  "Other",
+  "SDLC / Engineering inefficiency.",
+  "Marketing spend waste.",
+  "Operations / process bottlenecks.",
+  "Legal / compliance overhead.",
+  "Customer support costs.",
+  "Other.",
 ];
 
 const COMPANY_SIZES = [
-  "Under $1M revenue",
-  "$1M – $50M revenue",
-  "$50M – $500M revenue",
-  "$500M+ revenue",
+  "Under $1M Revenue",
+  "$1M – $50M Revenue",
+  "$50M – $500M Revenue",
+  "$500M+ Revenue",
 ];
 
 const inputBase =
@@ -172,7 +172,7 @@ export function ContactForm({ context }: ContactFormProps) {
               </label>
               <label className="block">
                 <span className={labelBase}>
-                  Engineering team size
+                  Engineer Size
                   <Required />
                 </span>
                 <select name="team_size" required className={inputBase} defaultValue="">

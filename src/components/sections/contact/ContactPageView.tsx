@@ -58,7 +58,7 @@ export function ContactPageView() {
         </div>
       </section>
 
-      <section className="bg-white py-24 md:py-28">
+      <section className="section-padding bg-white">
         <div className="content-container grid gap-8 md:grid-cols-[2fr_3fr] md:gap-10">
           <aside className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 md:p-10">
             <h3 className="text-[20px] font-medium tracking-[-0.015em] text-[var(--ink)]">
@@ -145,7 +145,7 @@ export function ContactPageView() {
         </div>
       </section>
 
-      <section className="bg-[var(--surface)] py-24 md:py-28">
+      <section className="section-padding bg-[var(--surface)]">
         <div className="content-container mx-auto max-w-[800px] text-center">
           <h3 className="text-[24px] font-medium tracking-[-0.02em] text-[var(--ink)] md:text-[28px]">
             {page.trustTitle}

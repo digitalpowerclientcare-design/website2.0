@@ -9,7 +9,7 @@ import { TextRollButton } from "@/components/ui/TextRollButton";
 import { HERO_SLIDES, type HeroSlideId } from "@/lib/homeContent";
 import { HeroMesh } from "./HeroMesh";
 
-const AUTO_INTERVAL_MS = 5500;
+const AUTO_INTERVAL_MS = 9500;
 
 const SLIDE_LABELS: Record<HeroSlideId, string> = {
   o3xs: "O3Xs",

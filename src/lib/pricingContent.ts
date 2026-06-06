@@ -94,6 +94,7 @@ export const FORGE_PRICING_PLANS: ForgePricingPlan[] = [
       "100 decisions per month",
       "1 connected repository",
       "Up to 5 engineer seats",
+      "Additional seats: $8/seat/mo",
       "All 6 verification agents",
       "GitHub or GitLab integration",
       "Standard audit trail export",
@@ -125,6 +126,7 @@ export const FORGE_PRICING_PLANS: ForgePricingPlan[] = [
       "250 decisions per month",
       "Up to 3 connected repositories",
       "Up to 15 engineer seats",
+      "Additional seats: $5/seat/mo",
       "Azure DevOps & Jira integration",
       "UI preview approval workflow",
       "SOC2-ready compliance packets",
@@ -154,7 +156,8 @@ export const FORGE_PRICING_PLANS: ForgePricingPlan[] = [
     features: [
       "500 decisions per month",
       "Up to 10 connected repositories",
-      "Up to 30 engineer seats",
+      "Up to 50 engineer seats",
+      "Additional seats: $2/seat/mo",
       "Full integration suite",
       "Dedicated onboarding",
       "SOC2-ready compliance packets",
@@ -194,10 +197,16 @@ export function getComparisonRows(period: BillingPeriod) {
       scale: "10",
     },
     {
-      label: "Engineer seats",
+      label: "Engineer seats included",
       starter: "5",
       growth: "15",
-      scale: "30",
+      scale: "50",
+    },
+    {
+      label: "Additional seat / mo",
+      starter: "$8",
+      growth: "$5",
+      scale: "$2",
     },
     {
       label: "Verification agents",
@@ -220,7 +229,40 @@ export function getComparisonRows(period: BillingPeriod) {
   ];
 }
 
-export const PRICING_FAQ = [
+export const CONSULTATION_PRICING_FAQ = [
+  {
+    question: "How is Consultation priced?",
+    answer:
+      "Consultation is engagement-based — not a fixed SaaS fee. Every program starts with a Performance Diagnostic, then moves to implementation and operate phases. We quote after understanding your scope, industry, and desired outcomes.",
+  },
+  {
+    question: "Is Consultation available as a subscription?",
+    answer:
+      "No. Pricing aligns to diagnostic, implementation, and operate retainers — with optional success fees tied to verified business impact. You pay for accountable delivery, not seat licenses.",
+  },
+  {
+    question: "What does the diagnostic include?",
+    answer:
+      "A 60-minute deep-dive session and a written Performance Diagnostic Report: quantified leakage, ROI-ranked improvements, and an implementation roadmap integrated with your existing systems.",
+  },
+  {
+    question: "Can we start with the diagnostic only?",
+    answer:
+      "Yes. The diagnostic is valuable on its own — you keep the report whether or not you proceed. Many engagements begin there before scoping orchestrate and operate phases.",
+  },
+  {
+    question: "How are success fees structured?",
+    answer:
+      "Where appropriate, we tie a portion of fees to metrics leadership can audit — cycle time, cost recovered, throughput, or margin protected — verified against your baseline from the diagnostic.",
+  },
+  {
+    question: "Which industries do you serve?",
+    answer:
+      "Healthcare, financial services, software, automotive, infrastructure, hospitality, and other operations-heavy enterprises — the O³ framework adapts to your domain, regulations, and KPIs.",
+  },
+] as const;
+
+export const FORGE_PRICING_FAQ = [
   {
     question: "How does the 3-day trial work?",
     answer:
@@ -242,13 +284,13 @@ export const PRICING_FAQ = [
       "We notify admins at 80% and 100% usage. You can add decision packs mid-cycle or move to the next tier. Contact us for burst arrangements on annual contracts.",
   },
   {
-    question: "Is Consultation available as a subscription?",
+    question: "How much do additional engineer seats cost?",
     answer:
-      "No. Consultation is engagement-based — diagnostic, implementation, and operate phases with pricing aligned to scope and outcomes. Enquire and we will scope after understanding your operation.",
+      "Starter: $8 per seat/month. Growth: $5 per seat/month. Scale: $2 per seat/month beyond the 50 seats included. Contact us for annual seat bundles on enterprise contracts.",
   },
   {
-    question: "Is Forge AI in private beta?",
+    question: "Is Forge AI in private Beta?",
     answer:
-      "Yes. Published tiers reflect planned GA pricing. Trial and beta customers receive onboarding support and introductory rates for the first contract term.",
+      "Yes. Published tiers reflect planned GA pricing. Trial and Beta customers receive onboarding support and introductory rates for the first contract term.",
   },
 ] as const;

@@ -73,7 +73,7 @@ export const HERO_SLIDES: HeroSlide[] = [
       "A ready-to-deploy solution that connects to your existing toolchain — Azure, AWS, Jira, GitHub, GitLab, DevOps pipelines, and more. Accelerate legacy modernization and greenfield product development with six verification agents and enterprise governance built in.",
     ctaLabel: "Explore FORGE AI",
     ctaHref: "/forge-ai",
-    secondaryLabel: "Request Private Beta",
+    secondaryLabel: "Request Forge AI Beta Access",
     secondaryHref: "/contact?interest=forge-beta",
     image: assetPath("/forge/pipeline.png"),
     imageAlt:
@@ -81,6 +81,74 @@ export const HERO_SLIDES: HeroSlide[] = [
     chips: ["Azure", "AWS", "Jira", "GitHub", "DevOps", "Legacy + New"],
   },
 ];
+
+export type ServicePath = {
+  id: ServiceId;
+  pathLabel: string;
+  title: string;
+  subtitle: string;
+  domain: string;
+  audience: string;
+  transforms: string;
+  differentiator: string;
+  outcomes: readonly string[];
+  notThis: string;
+  /** Unsplash / licensed-free hero for the selected-service banner */
+  heroImage: string;
+  heroImageAlt: string;
+  imageTagline: string;
+  imageTaglineAccent: string;
+};
+
+export const SERVICE_PATHS: Record<ServiceId, ServicePath> = {
+  consultation: {
+    id: "consultation",
+    pathLabel: "Service 01",
+    title: "Consultation",
+    subtitle: "Business Process Automation · O³ Framework",
+    domain: "Business operations & performance",
+    audience: "COO, CFO, CIO & cross-functional leaders",
+    transforms:
+      "How your enterprise runs — processes, revenue leakage, operations, and delivery governance across any industry.",
+    differentiator:
+      "End-to-end automation of how your business already runs — not a tool rollout. We map leakage, orchestrate AI across existing workflows, and operate until margin and performance compound.",
+    outcomes: [
+      "Maximize operational results",
+      "Minimize cost & waste",
+      "Verified business impact",
+    ],
+    notThis: "Not a software dev tool — this is how your business performs.",
+    heroImage:
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=85&w=1920",
+    heroImageAlt:
+      "Enterprise leadership reviewing AI-driven business process automation and operational performance",
+    imageTagline: "Automate how your business runs.",
+    imageTaglineAccent: "Maximize results. Minimize cost.",
+  },
+  forge: {
+    id: "forge",
+    pathLabel: "Service 02",
+    title: "FORGE AI",
+    subtitle: "Enterprise SDLC Platform · SaaS",
+    domain: "Software engineering & product delivery",
+    audience: "VP Engineering, platform teams & product engineering",
+    transforms:
+      "How your organization ships software — from feature request through verification, review, and merge-ready production output.",
+    differentiator:
+      "End-to-end AI-native SDLC on your repository — intake through verification and merge-ready output — without replacing GitHub, Jira, or your cloud estate.",
+    outcomes: [
+      "Faster verified releases",
+      "Lower cost per feature",
+      "Governed engineering scale",
+    ],
+    notThis: "Not business consulting — this is AI-native software delivery.",
+    heroImage: assetPath("/forge/pipeline.png"),
+    heroImageAlt:
+      "FORGE AI enterprise SDLC pipeline — verified feature delivery from intake to production",
+    imageTagline: "Ship verified software faster.",
+    imageTaglineAccent: "Governed AI on your stack.",
+  },
+};
 
 export const CONSULTATION_FRAMEWORK = [
   {
@@ -187,7 +255,7 @@ export const INDUSTRY_PREVIEWS: IndustryPreview[] = [
       "AI-assisted workflow orchestration across procurement and plant scheduling with operate retainer tied to verified margin recovery.",
     caseStudyHref: "/case-studies/?vertical=automotive",
     image:
-      "https://images.unsplash.com/photo-1565043589221-1a6fd000f4d8?auto=format&fit=crop&q=85&w=900",
+      "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=85&w=900",
     status: "live",
   },
   {
@@ -201,7 +269,7 @@ export const INDUSTRY_PREVIEWS: IndustryPreview[] = [
       "Embedded AI-assisted orchestration across delivery workflows — without replacing existing PM tools or engineering stack.",
     caseStudyHref: "/case-studies/?vertical=software",
     image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=85&w=900",
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=85&w=900",
     status: "live",
   },
   {
@@ -263,4 +331,4 @@ export const FORGE_STATS = [
 ] as const;
 
 export const CONSULTATION_CTA_IMAGE =
-  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=85&w=900";
+  "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=85&w=900";
