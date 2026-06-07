@@ -36,10 +36,7 @@ jobs:
 
       - name: Build with Next.js
         env:
-          # When custom domain (o3xs.com) is configured later, basePath should be empty.
-          # Until then, hosted at o3xs.github.io/O3_Website/, so we need basePath.
-          # We detect via the CNAME file:
-          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_CUSTOM_DOMAIN: "true"
         run: npm run build
 
       - name: Upload artifact
