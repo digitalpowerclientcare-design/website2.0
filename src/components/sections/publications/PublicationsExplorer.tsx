@@ -11,6 +11,7 @@ import {
   type Publication,
   type PublicationCategory,
 } from "@/lib/publicationsContent";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 import { PublicationAccessModal } from "./PublicationAccessModal";
 
 export function PublicationsExplorer() {
@@ -54,11 +55,12 @@ export function PublicationsExplorer() {
     openAccess(publication);
   };
 
-  const handleSubmit = (data: {
+  const handleSubmit = async (data: {
     name: string;
     email: string;
     company: string;
     role: string;
+    botcheck?: string;
   }) => {
     if (!modalPublication) return;
     if (!data.name || !data.email || !data.company) return;
@@ -68,8 +70,28 @@ export function PublicationsExplorer() {
     setSuccessEmail(data.email);
     setActiveId(modalPublication.id);
 
-    // Hook for future API / Formspree / CRM — payload available here
-    void data;
+    const result = await submitToWeb3Forms({
+      subject: "New O3Xs Publication Access Request",
+      form_type: "publication_access",
+      source_page: "Publications",
+      botcheck: data.botcheck,
+      fields: {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        role: data.role,
+        publication_id: modalPublication.id,
+        publication_title: modalPublication.title,
+        report_title: modalPublication.reportTitle,
+      },
+    });
+
+    if (!result.ok) {
+      console.warn(
+        "[Web3Forms] Publication access email failed:",
+        result.message,
+      );
+    }
   };
 
   const afterSuccessClose = () => {

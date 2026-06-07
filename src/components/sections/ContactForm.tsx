@@ -1,14 +1,69 @@
 "use client";
 
+import { useState } from "react";
 import { BLEEDING_OPTIONS, COMPANY_SIZES } from "@/lib/site";
+import { formDataToFields, submitToWeb3Forms } from "@/lib/web3forms";
 
 export function ContactForm() {
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const result = await submitToWeb3Forms({
+      subject: "New O3Xs Website Lead - Legacy Contact Form",
+      form_type: "legacy_contact",
+      source_page:
+        typeof window !== "undefined" ? window.location.pathname : "/",
+      botcheck: String(formData.get("botcheck") ?? ""),
+      fields: formDataToFields(formData),
+    });
+
+    setSubmitting(false);
+
+    if (result.ok) {
+      setSuccess(true);
+      form.reset();
+      return;
+    }
+
+    setError(result.message);
+  }
+
+  if (success) {
+    return (
+      <div
+        className="space-y-3 rounded-xl border border-[var(--border)] bg-white p-8 shadow-[var(--shadow-card)]"
+        role="status"
+      >
+        <p className="text-[15px] font-medium text-[var(--ink)]">Request received</p>
+        <p className="text-[14px] text-[var(--ink-secondary)]">
+          Thank you — we&apos;ll be in touch within one business day.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <form
-      action="#"
-      method="post"
+      onSubmit={handleSubmit}
       className="space-y-5 rounded-xl border border-[var(--border)] bg-white p-8 shadow-[var(--shadow-card)]"
     >
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+      />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="full-name" className="form-label">
@@ -93,8 +148,14 @@ export function ContactForm() {
         </div>
       </div>
 
-      <button type="submit" className="btn-indigo">
-        Submit →
+      {error && (
+        <p className="text-[14px] text-red-700" role="alert">
+          {error}
+        </p>
+      )}
+
+      <button type="submit" className="btn-indigo" disabled={submitting}>
+        {submitting ? "Submitting…" : "Submit →"}
       </button>
     </form>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import type { ContactContext } from "@/lib/contactContent";
 import {
@@ -8,6 +9,7 @@ import {
   FORGE_TEAM_SIZE_OPTIONS,
   FORGE_USE_CASE_OPTIONS,
 } from "@/lib/contactContent";
+import { formDataToFields, submitToWeb3Forms } from "@/lib/web3forms";
 
 const BLEEDING_OPTIONS = [
   "SDLC / Engineering inefficiency.",
@@ -44,13 +46,86 @@ type ContactFormProps = {
 export function ContactForm({ context }: ContactFormProps) {
   const isForge = context.variant === "forge";
   const forge = context.forge;
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const fields = formDataToFields(formData);
+
+    const result = await submitToWeb3Forms({
+      subject: "New O3Xs Website Lead - Contact Form",
+      form_type: "contact",
+      source_page:
+        typeof window !== "undefined"
+          ? `${window.location.pathname}${window.location.search}`
+          : "/contact",
+      botcheck: String(formData.get("botcheck") ?? ""),
+      fields: {
+        ...fields,
+        variant: context.variant,
+        interest: context.interest,
+        ...(forge?.kind && { forge_request: forge.kind }),
+        ...(forge?.planId && { plan: forge.planId }),
+        ...(forge?.billing && { billing: forge.billing }),
+        ...(forge?.summary && { context_summary: forge.summary }),
+      },
+    });
+
+    setSubmitting(false);
+
+    if (result.ok) {
+      setSuccess(true);
+      form.reset();
+      return;
+    }
+
+    setError(result.message);
+  }
+
+  if (success) {
+    return (
+      <div
+        className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 md:p-12"
+        role="status"
+      >
+        <p className="eyebrow mb-2 text-[var(--emerald)]">Success</p>
+        <h3 className="text-[22px] font-medium tracking-[-0.015em] text-[var(--ink)]">
+          Request received
+        </h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-[var(--ink-secondary)]">
+          Thank you — we&apos;ll be in touch within one business day at the email
+          you provided.
+        </p>
+        <button
+          type="button"
+          onClick={() => setSuccess(false)}
+          className="mt-8 inline-flex rounded-full border border-[var(--border)] bg-white px-6 py-3 text-[14px] font-medium text-[var(--ink)] transition-colors hover:border-[var(--indigo)]/40"
+        >
+          Submit another request
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form
-      action="#"
-      method="post"
+      onSubmit={handleSubmit}
       className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 md:p-12"
     >
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+      />
       <input type="hidden" name="interest" value={context.interest} />
       {forge?.planId && <input type="hidden" name="plan" value={forge.planId} />}
       {forge?.billing && <input type="hidden" name="billing" value={forge.billing} />}
@@ -276,11 +351,21 @@ export function ContactForm({ context }: ContactFormProps) {
           </>
         )}
 
+        {error && (
+          <p
+            className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-800"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="group mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--indigo)] py-3.5 text-[15px] font-medium text-white transition-colors duration-300 hover:bg-[var(--indigo-light)] sm:w-auto sm:pr-2 sm:pl-7"
+          disabled={submitting}
+          className="group mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--indigo)] py-3.5 text-[15px] font-medium text-white transition-colors duration-300 hover:bg-[var(--indigo-light)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:pr-2 sm:pl-7"
         >
-          {context.page.submitLabel}
+          {submitting ? "Submitting…" : context.page.submitLabel}
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[var(--indigo)] transition-transform duration-500 group-hover:-rotate-45">
             <ArrowRight className="h-4 w-4" />
           </span>

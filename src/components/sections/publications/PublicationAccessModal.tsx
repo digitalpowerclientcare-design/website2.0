@@ -23,6 +23,7 @@ type PublicationAccessModalProps = {
     email: string;
     company: string;
     role: string;
+    botcheck?: string;
   }) => void;
 };
 
@@ -128,9 +129,17 @@ export function PublicationAccessModal({
                   email: String(fd.get("email") ?? "").trim(),
                   company: String(fd.get("company") ?? "").trim(),
                   role: String(fd.get("role") ?? "").trim(),
+                  botcheck: String(fd.get("botcheck") ?? ""),
                 });
               }}
             >
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+              />
               <input type="hidden" name="publication_id" value={publication.id} />
               <input type="hidden" name="report_title" value={publication.reportTitle} />
 
