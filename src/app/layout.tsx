@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { PageTransition } from "@/components/providers/PageTransition";
 import { SITE } from "@/lib/site";
 import "./globals.css";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen antialiased" suppressHydrationWarning>
         <SmoothScroll>
+          <AnnouncementBanner />
           <Navbar />
           <main className="pt-[72px]">
             <PageTransition>{children}</PageTransition>
