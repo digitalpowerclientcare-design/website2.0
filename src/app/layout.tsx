@@ -40,6 +40,13 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
+      <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="object-src 'none'; base-uri 'self';"
+        />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+      </head>
       <body className="min-h-screen antialiased" suppressHydrationWarning>
         <SmoothScroll>
           <Navbar />

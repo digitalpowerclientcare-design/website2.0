@@ -25,12 +25,17 @@ export function TextReveal({
     if (!el) return;
 
     const words = children.split(" ");
-    el.innerHTML = words
-      .map(
-        (word) =>
-          `<span class="inline-block overflow-hidden align-bottom"><span class="word inline-block translate-y-full opacity-0">${word}&nbsp;</span></span>`,
-      )
-      .join("");
+
+    el.textContent = "";
+    words.forEach((word) => {
+      const outer = document.createElement("span");
+      outer.className = "inline-block overflow-hidden align-bottom";
+      const inner = document.createElement("span");
+      inner.className = "word inline-block translate-y-full opacity-0";
+      inner.textContent = `${word}\u00A0`;
+      outer.appendChild(inner);
+      el.appendChild(outer);
+    });
 
     const wordEls = el.querySelectorAll(".word");
 

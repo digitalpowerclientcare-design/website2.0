@@ -72,6 +72,7 @@ export function BetaAccessForm() {
           name="email"
           type="email"
           required
+          maxLength={320}
           className="form-input"
           placeholder="you@company.com"
         />
@@ -84,6 +85,7 @@ export function BetaAccessForm() {
           id="beta-company"
           name="company"
           required
+          maxLength={200}
           className="form-input"
           placeholder="Company Inc."
         />

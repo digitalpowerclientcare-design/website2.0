@@ -152,6 +152,7 @@ export function PublicationAccessModal({
                   type="text"
                   name="name"
                   required
+                  maxLength={200}
                   autoComplete="name"
                   className={inputBase}
                   placeholder="Jane Doe"
@@ -166,6 +167,7 @@ export function PublicationAccessModal({
                   type="email"
                   name="email"
                   required
+                  maxLength={320}
                   autoComplete="email"
                   className={inputBase}
                   placeholder="jane@company.com"
@@ -180,6 +182,7 @@ export function PublicationAccessModal({
                   type="text"
                   name="company"
                   required
+                  maxLength={200}
                   autoComplete="organization"
                   className={inputBase}
                   placeholder="Acme Inc."
@@ -191,6 +194,7 @@ export function PublicationAccessModal({
                 <input
                   type="text"
                   name="role"
+                  maxLength={200}
                   autoComplete="organization-title"
                   className={inputBase}
                   placeholder="VP Engineering"

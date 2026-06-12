@@ -69,7 +69,7 @@ export function ContactForm() {
           <label htmlFor="full-name" className="form-label">
             Full Name *
           </label>
-          <input id="full-name" name="name" required className="form-input" />
+          <input id="full-name" name="name" required maxLength={200} className="form-input" />
         </div>
         <div>
           <label htmlFor="work-email" className="form-label">
@@ -80,6 +80,7 @@ export function ContactForm() {
             name="email"
             type="email"
             required
+            maxLength={320}
             className="form-input"
           />
         </div>
@@ -90,13 +91,13 @@ export function ContactForm() {
           <label htmlFor="company" className="form-label">
             Company Name *
           </label>
-          <input id="company" name="company" required className="form-input" />
+          <input id="company" name="company" required maxLength={200} className="form-input" />
         </div>
         <div>
           <label htmlFor="role" className="form-label">
             Your Role *
           </label>
-          <input id="role" name="role" required className="form-input" />
+          <input id="role" name="role" required maxLength={200} className="form-input" />
         </div>
       </div>
 
@@ -133,7 +134,7 @@ export function ContactForm() {
           <label htmlFor="phone" className="form-label">
             Phone Number
           </label>
-          <input id="phone" name="phone" type="tel" className="form-input" />
+          <input id="phone" name="phone" type="tel" maxLength={30} className="form-input" />
         </div>
         <div>
           <label htmlFor="datetime" className="form-label">

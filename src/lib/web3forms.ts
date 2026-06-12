@@ -1,5 +1,6 @@
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const WEBSITE_DOMAIN = "https://o3xs.com/";
+const MAX_FIELD_LENGTH = 2000;
 
 export type Web3FormsSubmitOptions = {
   subject: string;
@@ -63,7 +64,7 @@ export async function submitToWeb3Forms(
 
   for (const [key, value] of Object.entries(fields)) {
     if (value !== undefined) {
-      payload[key] = value;
+      payload[key] = value.slice(0, MAX_FIELD_LENGTH);
     }
   }
 
