@@ -164,10 +164,14 @@ export function getStoredPublicationAccess(): string[] {
 }
 
 export function storePublicationAccess(publicationId: string): void {
-  const existing = getStoredPublicationAccess();
-  if (existing.includes(publicationId)) return;
-  sessionStorage.setItem(
-    SESSION_STORAGE_KEY,
-    JSON.stringify([...existing, publicationId]),
-  );
+  try {
+    const existing = getStoredPublicationAccess();
+    if (existing.includes(publicationId)) return;
+    sessionStorage.setItem(
+      SESSION_STORAGE_KEY,
+      JSON.stringify([...existing, publicationId]),
+    );
+  } catch {
+    // Storage may be full or disabled (e.g. private browsing).
+  }
 }

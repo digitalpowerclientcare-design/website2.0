@@ -17,6 +17,7 @@ type PublicationAccessModalProps = {
   publication: Publication | null;
   open: boolean;
   successEmail: string | null;
+  emailSendFailed?: boolean;
   onClose: () => void;
   onSubmit: (data: {
     name: string;
@@ -31,6 +32,7 @@ export function PublicationAccessModal({
   publication,
   open,
   successEmail,
+  emailSendFailed,
   onClose,
   onSubmit,
 }: PublicationAccessModalProps) {
@@ -93,10 +95,12 @@ export function PublicationAccessModal({
               {PUBLICATION_ACCESS_COPY.successTitle}
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-[var(--ink-secondary)]">
-              {PUBLICATION_ACCESS_COPY.successBody(
-                publication.reportTitle,
-                successEmail,
-              )}
+              {emailSendFailed
+                ? `You can read the article below. We couldn't send "${publication.reportTitle}" to ${successEmail} — please contact us at contact@o3xs.com if you need the full report.`
+                : PUBLICATION_ACCESS_COPY.successBody(
+                    publication.reportTitle,
+                    successEmail,
+                  )}
             </p>
             <button
               type="button"

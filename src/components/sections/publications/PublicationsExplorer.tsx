@@ -19,6 +19,7 @@ export function PublicationsExplorer() {
   const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
   const [modalPublication, setModalPublication] = useState<Publication | null>(null);
   const [successEmail, setSuccessEmail] = useState<string | null>(null);
+  const [emailSendFailed, setEmailSendFailed] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export function PublicationsExplorer() {
   const openAccess = useCallback((publication: Publication) => {
     setModalPublication(publication);
     setSuccessEmail(null);
+    setEmailSendFailed(false);
   }, []);
 
   const closeModal = useCallback(() => {
@@ -68,29 +70,31 @@ export function PublicationsExplorer() {
     storePublicationAccess(modalPublication.id);
     setUnlockedIds(getStoredPublicationAccess());
     setSuccessEmail(data.email);
+    setEmailSendFailed(false);
     setActiveId(modalPublication.id);
 
-    const result = await submitToWeb3Forms({
-      subject: "New O3Xs Publication Access Request",
-      form_type: "publication_access",
-      source_page: "Publications",
-      botcheck: data.botcheck,
-      fields: {
-        name: data.name,
-        email: data.email,
-        company: data.company,
-        role: data.role,
-        publication_id: modalPublication.id,
-        publication_title: modalPublication.title,
-        report_title: modalPublication.reportTitle,
-      },
-    });
+    try {
+      const result = await submitToWeb3Forms({
+        subject: "New O3Xs Publication Access Request",
+        form_type: "publication_access",
+        source_page: "Publications",
+        botcheck: data.botcheck,
+        fields: {
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          role: data.role,
+          publication_id: modalPublication.id,
+          publication_title: modalPublication.title,
+          report_title: modalPublication.reportTitle,
+        },
+      });
 
-    if (!result.ok) {
-      console.warn(
-        "[Web3Forms] Publication access email failed:",
-        result.message,
-      );
+      if (!result.ok) {
+        setEmailSendFailed(true);
+      }
+    } catch {
+      setEmailSendFailed(true);
     }
   };
 
@@ -244,6 +248,7 @@ export function PublicationsExplorer() {
         publication={modalPublication}
         open={modalPublication !== null}
         successEmail={successEmail}
+        emailSendFailed={emailSendFailed}
         onClose={successEmail ? afterSuccessClose : closeModal}
         onSubmit={handleSubmit}
       />

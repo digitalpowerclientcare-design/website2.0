@@ -107,7 +107,9 @@ export function MasonryGallery({
   const [imagesReady, setImagesReady] = useState(false);
 
   useEffect(() => {
-    preloadImages(items.map((i) => i.img)).then(() => setImagesReady(true));
+    preloadImages(items.map((i) => i.img))
+      .then(() => setImagesReady(true))
+      .catch(() => setImagesReady(true));
   }, [items]);
 
   const getInitialPos = (item: GridItem) => {
