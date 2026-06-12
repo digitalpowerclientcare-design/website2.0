@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { EASE_OUT } from "@/lib/motion";
 
 type SplitWordsProps = {
   text: string;
@@ -34,7 +35,7 @@ export function SplitWords({
               transition={{
                 delay: delay + i * stagger,
                 duration: 0.75,
-                ease: [0.22, 1, 0.36, 1],
+                ease: EASE_OUT,
               }}
             >
               {word}
@@ -58,7 +59,7 @@ export function SplitWords({
             transition={{
               delay: i * stagger,
               duration: 0.7,
-              ease: [0.22, 1, 0.36, 1],
+              ease: EASE_OUT,
             }}
           >
             {word}

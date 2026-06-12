@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { TextReveal } from "@/components/ui/TextReveal";
+import { EASE_OUT, VIEWPORT_ONCE } from "@/lib/motion";
 
 export function ProductsPreview() {
   return (
@@ -17,8 +18,8 @@ export function ProductsPreview() {
           <motion.article
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+            viewport={VIEWPORT_ONCE}
+            transition={{ duration: 0.6, ease: EASE_OUT }}
             className="stripe-card overflow-hidden"
           >
             <div className="relative bg-gradient-to-br from-[#1c1e54] to-[#533afd] p-8 pb-32">

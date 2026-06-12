@@ -7,6 +7,7 @@ import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { Check, Maximize2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { assetPath } from "@/lib/assetPath";
+import { EASE_OUT } from "@/lib/motion";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { StripeMesh } from "./StripeMesh";
 
@@ -151,7 +152,7 @@ function TileExpanded({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, ease: EASE_OUT }}
       className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_24px_64px_rgba(28,30,84,0.12)]"
     >
       <StripeMesh variant={tile.mesh} className="opacity-40" />
@@ -254,7 +255,7 @@ export function ExpandableTiles() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, ease: EASE_OUT }}
           className="mb-10 md:mb-14"
         >
           <p className="eyebrow mb-3">What we deliver</p>

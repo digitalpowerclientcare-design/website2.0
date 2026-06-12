@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { EASE_OUT } from "@/lib/motion";
 import {
   isNavItemActive,
   type NavDropdownItem,
@@ -281,7 +282,7 @@ export function NavDropdown({ item, open, onOpen, onClose }: NavDropdownProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.22, ease: EASE_OUT }}
             className="absolute top-full left-1/2 z-50 w-[min(92vw,620px)] -translate-x-1/2 pt-3"
           >
             <MegaMenuPanel item={item} onNavigate={onClose} />

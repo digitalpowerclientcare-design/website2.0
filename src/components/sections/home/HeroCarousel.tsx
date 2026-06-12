@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { HERO_SLIDES, type HeroSlideId } from "@/lib/homeContent";
+import { EASE_OUT } from "@/lib/motion";
 import { HeroMesh } from "./HeroMesh";
 
 const AUTO_INTERVAL_MS = 9500;
@@ -61,7 +62,7 @@ export function HeroCarousel() {
           initial={{ opacity: 0, x: 56 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -56 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.55, ease: EASE_OUT }}
           className="content-container relative z-10 grid min-h-[calc(100svh-72px)] items-center gap-8 py-6 sm:gap-10 sm:py-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:py-10"
         >
           <div className="max-w-xl pt-2 lg:pt-0">

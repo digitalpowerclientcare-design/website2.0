@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { EASE_OUT } from "@/lib/motion";
 
 /** Decorative SVG illustration: orbits + data nodes for the consulting hero. */
 export function HeroOrbits() {
@@ -74,7 +75,7 @@ export function HeroOrbits() {
           fill="#533AFD"
           initial={{ scale: 0 }}
           animate={{ scale: [0, 1.15, 1] }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: EASE_OUT }}
         />
         <motion.circle
           cx="210"
