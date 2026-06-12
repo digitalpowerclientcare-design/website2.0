@@ -158,6 +158,7 @@ export function ContactForm({ context }: ContactFormProps) {
               type="text"
               name="name"
               required
+              maxLength={200}
               autoComplete="name"
               className={inputBase}
               placeholder="Jane Doe"
@@ -172,6 +173,7 @@ export function ContactForm({ context }: ContactFormProps) {
               type="email"
               name="email"
               required
+              maxLength={320}
               autoComplete="email"
               className={inputBase}
               placeholder="jane@company.com"
@@ -189,6 +191,7 @@ export function ContactForm({ context }: ContactFormProps) {
               type="text"
               name="company"
               required
+              maxLength={200}
               autoComplete="organization"
               className={inputBase}
               placeholder="Acme Inc."
@@ -203,6 +206,7 @@ export function ContactForm({ context }: ContactFormProps) {
               type="text"
               name="role"
               required
+              maxLength={200}
               className={inputBase}
               placeholder={isForge ? "VP Engineering" : "Chief Operating Officer"}
             />
@@ -272,6 +276,7 @@ export function ContactForm({ context }: ContactFormProps) {
                 type="text"
                 name="stack"
                 required
+                maxLength={500}
                 className={inputBase}
                 placeholder="e.g. TypeScript, .NET, AWS, Azure"
               />
@@ -294,6 +299,7 @@ export function ContactForm({ context }: ContactFormProps) {
               <textarea
                 name="notes"
                 rows={3}
+                maxLength={2000}
                 className={inputBase}
                 placeholder="Repo size, compliance needs, first feature in mind…"
               />
@@ -338,6 +344,7 @@ export function ContactForm({ context }: ContactFormProps) {
                 <input
                   type="tel"
                   name="phone"
+                  maxLength={30}
                   autoComplete="tel"
                   className={inputBase}
                   placeholder="+1 (555) 000-0000"
