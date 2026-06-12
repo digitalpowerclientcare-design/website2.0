@@ -56,37 +56,42 @@ export function ContactForm({ context }: ContactFormProps) {
     setError(null);
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    const fields = formDataToFields(formData);
 
-    const result = await submitToWeb3Forms({
-      subject: "New O3Xs Website Lead - Contact Form",
-      form_type: "contact",
-      source_page:
-        typeof window !== "undefined"
-          ? `${window.location.pathname}${window.location.search}`
-          : "/contact",
-      botcheck: String(formData.get("botcheck") ?? ""),
-      fields: {
-        ...fields,
-        variant: context.variant,
-        interest: context.interest,
-        ...(forge?.kind && { forge_request: forge.kind }),
-        ...(forge?.planId && { plan: forge.planId }),
-        ...(forge?.billing && { billing: forge.billing }),
-        ...(forge?.summary && { context_summary: forge.summary }),
-      },
-    });
+    try {
+      const formData = new FormData(form);
+      const fields = formDataToFields(formData);
 
-    setSubmitting(false);
+      const result = await submitToWeb3Forms({
+        subject: "New O3Xs Website Lead - Contact Form",
+        form_type: "contact",
+        source_page:
+          typeof window !== "undefined"
+            ? `${window.location.pathname}${window.location.search}`
+            : "/contact",
+        botcheck: String(formData.get("botcheck") ?? ""),
+        fields: {
+          ...fields,
+          variant: context.variant,
+          interest: context.interest,
+          ...(forge?.kind && { forge_request: forge.kind }),
+          ...(forge?.planId && { plan: forge.planId }),
+          ...(forge?.billing && { billing: forge.billing }),
+          ...(forge?.summary && { context_summary: forge.summary }),
+        },
+      });
 
-    if (result.ok) {
-      setSuccess(true);
-      form.reset();
-      return;
+      if (result.ok) {
+        setSuccess(true);
+        form.reset();
+        return;
+      }
+
+      setError(result.message);
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-
-    setError(result.message);
   }
 
   if (success) {

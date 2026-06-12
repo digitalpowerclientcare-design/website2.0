@@ -14,26 +14,31 @@ export function BetaAccessForm() {
     setError(null);
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
 
-    const result = await submitToWeb3Forms({
-      subject: "New O3Xs Forge Beta Request",
-      form_type: "forge_beta",
-      source_page:
-        typeof window !== "undefined" ? window.location.pathname : "/",
-      botcheck: String(formData.get("botcheck") ?? ""),
-      fields: formDataToFields(formData),
-    });
+    try {
+      const formData = new FormData(form);
 
-    setSubmitting(false);
+      const result = await submitToWeb3Forms({
+        subject: "New O3Xs Forge Beta Request",
+        form_type: "forge_beta",
+        source_page:
+          typeof window !== "undefined" ? window.location.pathname : "/",
+        botcheck: String(formData.get("botcheck") ?? ""),
+        fields: formDataToFields(formData),
+      });
 
-    if (result.ok) {
-      setSuccess(true);
-      form.reset();
-      return;
+      if (result.ok) {
+        setSuccess(true);
+        form.reset();
+        return;
+      }
+
+      setError(result.message);
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-
-    setError(result.message);
   }
 
   if (success) {
