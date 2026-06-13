@@ -694,5 +694,25 @@
   .float-dot {
     animation: float-dot 10s ease-in-out infinite;
   }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton-pulse {
+    background: linear-gradient(
+      90deg,
+      var(--border) 0%,
+      var(--surface-alt) 40%,
+      var(--border) 80%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
 }
 
