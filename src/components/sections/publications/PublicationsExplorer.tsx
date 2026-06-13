@@ -1,35 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Clock, FileText, Lock, Unlock } from "lucide-react";
+import { useMemo, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Clock, FileText, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   PUBLICATION_CATEGORIES,
   PUBLICATIONS,
-  getStoredPublicationAccess,
-  storePublicationAccess,
-  type Publication,
   type PublicationCategory,
 } from "@/lib/publicationsContent";
+<<<<<<< HEAD
 import { submitToWeb3Forms } from "@/lib/web3forms";
 import { PublicationAccessModal } from "./PublicationAccessModal";
+=======
+>>>>>>> b717f80 (Remove ignored build and dmg files)
 
 export function PublicationsExplorer() {
   const [category, setCategory] = useState<PublicationCategory>("All");
-  const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
-  const [modalPublication, setModalPublication] = useState<Publication | null>(null);
-  const [successEmail, setSuccessEmail] = useState<string | null>(null);
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setUnlockedIds(getStoredPublicationAccess());
-  }, []);
 
   const filtered = useMemo(() => {
     if (category === "All") return PUBLICATIONS;
     return PUBLICATIONS.filter((p) => p.category === category);
   }, [category]);
 
+<<<<<<< HEAD
   const activePublication = useMemo(
     () => PUBLICATIONS.find((p) => p.id === activeId) ?? null,
     [activeId],
@@ -103,150 +98,85 @@ export function PublicationsExplorer() {
     }
   };
 
+=======
+>>>>>>> b717f80 (Remove ignored build and dmg files)
   return (
-    <>
-      <section className="section-padding bg-white pt-12 md:pt-14">
-        <div className="content-container">
-          <div className="mb-10 flex flex-wrap gap-2">
-            {PUBLICATION_CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setCategory(cat)}
-                className={cn(
-                  "rounded-full px-4 py-2 text-[13px] font-medium transition-colors",
-                  category === cat
-                    ? "bg-[var(--indigo)] text-white"
-                    : "border border-[var(--border)] bg-white text-[var(--ink-secondary)] hover:border-[var(--indigo)]/40 hover:text-[var(--ink)]",
-                )}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {filtered.map((publication) => {
-              const unlocked = unlockedIds.includes(publication.id);
-              const isActive = activeId === publication.id;
-
-              return (
-                <button
-                  key={publication.id}
-                  type="button"
-                  onClick={() => handleCardClick(publication)}
-                  className={cn(
-                    "group flex flex-col rounded-2xl border bg-[var(--surface)] p-6 text-left transition-all duration-200",
-                    isActive
-                      ? "border-[var(--indigo)] shadow-[0_12px_40px_rgba(83,58,253,0.12)]"
-                      : "border-[var(--border)] hover:border-[var(--indigo)]/35 hover:shadow-[0_12px_40px_rgba(83,58,253,0.08)]",
-                  )}
-                >
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <span className="rounded-full bg-[var(--indigo-bg)] px-3 py-1 text-[11px] font-semibold tracking-wide text-[var(--indigo)] uppercase">
-                      {publication.category}
-                    </span>
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-1.5 text-[12px] font-medium",
-                        unlocked ? "text-[var(--emerald)]" : "text-[var(--ink-muted)]",
-                      )}
-                    >
-                      {unlocked ? (
-                        <>
-                          <Unlock size={14} aria-hidden />
-                          Unlocked
-                        </>
-                      ) : (
-                        <>
-                          <Lock size={14} aria-hidden />
-                          Request access
-                        </>
-                      )}
-                    </span>
-                  </div>
-
-                  <h2 className="text-[20px] font-medium tracking-[-0.02em] text-[var(--ink)] group-hover:text-[var(--indigo)]">
-                    {publication.title}
-                  </h2>
-                  <p className="mt-3 flex-1 text-[14px] leading-relaxed text-[var(--ink-secondary)]">
-                    {publication.excerpt}
-                  </p>
-
-                  <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-[var(--border)] pt-4 text-[12px] text-[var(--ink-muted)]">
-                    <span className="inline-flex items-center gap-1.5">
-                      <FileText size={14} aria-hidden />
-                      {publication.author}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock size={14} aria-hidden />
-                      {publication.readMinutes} min read
-                    </span>
-                    <span>{publication.publishedAt}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+    <section className="section-padding bg-white pt-12 md:pt-14">
+      <div className="content-container">
+        <div className="mb-10 flex flex-wrap gap-2">
+          {PUBLICATION_CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setCategory(cat)}
+              className={cn(
+                "rounded-full px-4 py-2 text-[13px] font-medium transition-colors",
+                category === cat
+                  ? "bg-[var(--indigo)] text-white"
+                  : "border border-[var(--border)] bg-white text-[var(--ink-secondary)] hover:border-[var(--indigo)]/40 hover:text-[var(--ink)]",
+              )}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
-      </section>
 
-      {activePublication && unlockedIds.includes(activePublication.id) && (
-        <section
-          id="publication-reader"
-          className="border-t border-[var(--border)] bg-[var(--surface)] py-20 md:py-24"
-        >
-          <div className="content-container max-w-3xl">
-            <p className="eyebrow mb-3">{activePublication.category}</p>
-            <h2 className="heading-section text-[var(--ink)]">{activePublication.title}</h2>
-            <p className="mt-4 text-[14px] text-[var(--ink-muted)]">
-              {activePublication.author} · {activePublication.publishedAt} ·{" "}
-              {activePublication.readMinutes} min read
-            </p>
-            <p className="body-lg mt-8 text-[var(--ink-secondary)]">
-              {activePublication.excerpt}
-            </p>
+        <div className="grid gap-6 md:grid-cols-2">
+          {filtered.map((publication) => (
+            <PublicationCard key={publication.id} publication={publication} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-            <div className="mt-10 space-y-8">
-              {activePublication.sections.map((section, i) => (
-                <div key={i}>
-                  {section.heading && (
-                    <h3 className="text-[18px] font-medium tracking-[-0.01em] text-[var(--ink)]">
-                      {section.heading}
-                    </h3>
-                  )}
-                  <p
-                    className={cn(
-                      "text-[16px] leading-relaxed text-[var(--ink-secondary)]",
-                      section.heading && "mt-3",
-                    )}
-                  >
-                    {section.body}
-                  </p>
-                </div>
-              ))}
-            </div>
+function PublicationCard({ publication }: { publication: (typeof PUBLICATIONS)[number] }) {
+  return (
+    <Link
+      href={`/publications/${publication.id}`}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-left transition-all duration-200 hover:border-[var(--indigo)]/35 hover:shadow-[0_12px_40px_rgba(83,58,253,0.08)]"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden border-b border-[var(--border)]">
+        <Image
+          src={publication.coverImage}
+          alt={publication.coverImageAlt}
+          fill
+          unoptimized
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/50 via-transparent to-transparent" />
+        <span className="absolute top-4 left-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold tracking-wide text-[var(--indigo)] uppercase backdrop-blur-sm">
+          {publication.category}
+        </span>
+      </div>
 
-            <p className="mt-12 rounded-2xl border border-[var(--indigo)]/20 bg-white px-6 py-5 text-[14px] text-[var(--ink-secondary)]">
-              <span className="font-medium text-[var(--ink)]">Full report: </span>
-              {activePublication.reportTitle} — delivered to the email you provided. Need help?
-              Contact us at{" "}
-              <a href="/contact" className="font-medium text-[var(--indigo)] hover:underline">
-                o3xs.com/contact
-              </a>
-              .
-            </p>
-          </div>
-        </section>
-      )}
+      <div className="flex flex-1 flex-col p-6">
+        <span className="inline-flex w-fit items-center gap-1.5 text-[12px] font-medium text-[var(--ink-muted)]">
+          <Lock size={14} aria-hidden />
+          Request access
+        </span>
 
-      <PublicationAccessModal
-        publication={modalPublication}
-        open={modalPublication !== null}
-        successEmail={successEmail}
-        onClose={successEmail ? afterSuccessClose : closeModal}
-        onSubmit={handleSubmit}
-      />
-    </>
+        <h2 className="mt-3 text-[20px] font-medium tracking-[-0.02em] text-[var(--ink)] group-hover:text-[var(--indigo)]">
+          {publication.title}
+        </h2>
+        <p className="mt-3 flex-1 text-[14px] leading-relaxed text-[var(--ink-secondary)]">
+          {publication.excerpt}
+        </p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-[var(--border)] pt-4 text-[12px] text-[var(--ink-muted)]">
+          <span className="inline-flex items-center gap-1.5">
+            <FileText size={14} aria-hidden />
+            {publication.author}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Clock size={14} aria-hidden />
+            {publication.readMinutes} min read
+          </span>
+          <span>{publication.publishedAt}</span>
+        </div>
+      </div>
+    </Link>
   );
 }

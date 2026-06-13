@@ -53,3 +53,10 @@ next-env.d.ts
 # Cursor
 .cursor/
 .dmg
+
+.dmg
+.next/
+
+.dmg
+.next/
+*.dmg

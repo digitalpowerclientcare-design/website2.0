@@ -88,7 +88,7 @@ export function PublicationAccessModal({
 
         {submitted ? (
           <div className="pr-8">
-            <p className="eyebrow mb-2 text-[var(--emerald)]">Success</p>
+            <p className="eyebrow mb-2 text-[var(--emerald)]">Submitted</p>
             <h2 id={titleId} className="text-[22px] font-medium tracking-[-0.02em] text-[var(--ink)]">
               {PUBLICATION_ACCESS_COPY.successTitle}
             </h2>
@@ -98,12 +98,15 @@ export function PublicationAccessModal({
                 successEmail,
               )}
             </p>
+            <p className="mt-3 text-[13px] leading-relaxed text-[var(--ink-muted)]">
+              {PUBLICATION_ACCESS_COPY.successFootnote}
+            </p>
             <button
               type="button"
               onClick={onClose}
               className="mt-8 inline-flex rounded-full bg-[var(--indigo)] px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[var(--indigo-deep)]"
             >
-              Read article
+              {PUBLICATION_ACCESS_COPY.successCta}
             </button>
           </div>
         ) : (

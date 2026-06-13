@@ -11,6 +11,8 @@ export type Publication = {
   readMinutes: number;
   publishedAt: string;
   author: string;
+  coverImage: string;
+  coverImageAlt: string;
   /** Shown in confirmation — what we email after access */
   reportTitle: string;
   sections: PublicationSection[];
@@ -20,17 +22,20 @@ export const PUBLICATIONS_INTRO = {
   eyebrow: "Publications",
   title: "Research & insights for enterprise leaders.",
   description:
-    "Articles and reports from the O3Xs team on AI delivery, business process automation, and governed scale. Enter your details to read on-site — we’ll send the full report to your inbox.",
+    "Articles and reports from the O3Xs team on AI delivery, business process automation, and governed scale. Select a publication to preview — request access for the full article and we’ll deliver the report to your inbox.",
 } as const;
 
 export const PUBLICATION_ACCESS_COPY = {
-  modalTitle: "Access this publication",
+  modalTitle: "Access the full article",
   modalSubtitle:
-    "Share a few details to read the article here. We’ll email you the full report shortly after.",
-  submitLabel: "Get access & report",
-  successTitle: "You’re in — check your inbox",
+    "Enter your details to continue reading. We’ll deliver the complete report to your inbox.",
+  submitLabel: "Send full report",
+  successTitle: "Your report is on the way",
   successBody: (reportTitle: string, email: string) =>
-    `We’re sending “${reportTitle}” to ${email}. You can read the article below while it arrives.`,
+    `We’ve sent “${reportTitle}” to ${email}. Please check your inbox — and your spam folder — within the next few minutes.`,
+  successFootnote:
+    "If you don’t see it shortly, contact us at contact@o3xs.com and we’ll resend it.",
+  successCta: "Back to publications",
   privacyNote:
     "We use your details only to deliver this publication and relevant O3Xs research. No spam.",
 } as const;
@@ -54,6 +59,9 @@ export const PUBLICATIONS: Publication[] = [
     readMinutes: 12,
     publishedAt: "May 2026",
     author: "O3Xs Research",
+    coverImage:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=85&w=1400",
+    coverImageAlt: "Abstract AI neural network — enterprise agentic readiness",
     reportTitle: "Agentic AI Enterprise Readiness Report",
     sections: [
       {
@@ -82,6 +90,9 @@ export const PUBLICATIONS: Publication[] = [
     readMinutes: 9,
     publishedAt: "April 2026",
     author: "O3Xs Research",
+    coverImage:
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=85&w=1400",
+    coverImageAlt: "Finance and engineering leaders aligning on unit economics",
     reportTitle: "Decision Economics for AI-Assisted SDLC",
     sections: [
       {
@@ -106,6 +117,9 @@ export const PUBLICATIONS: Publication[] = [
     readMinutes: 11,
     publishedAt: "March 2026",
     author: "O3Xs Research",
+    coverImage:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=85&w=1400",
+    coverImageAlt: "Operations team workshop — business process automation cadence",
     reportTitle: "BPA Operate Model Playbook",
     sections: [
       {
@@ -130,6 +144,9 @@ export const PUBLICATIONS: Publication[] = [
     readMinutes: 10,
     publishedAt: "February 2026",
     author: "O3Xs Research",
+    coverImage:
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=85&w=1400",
+    coverImageAlt: "Cross-functional team planning a governed AI toolchain",
     reportTitle: "Governed AI Toolchain Reference Architecture",
     sections: [
       {
@@ -146,6 +163,10 @@ export const PUBLICATIONS: Publication[] = [
     ],
   },
 ];
+
+export function getPublicationBySlug(slug: string): Publication | undefined {
+  return PUBLICATIONS.find((p) => p.id === slug);
+}
 
 export const SESSION_STORAGE_KEY = "o3xs-publication-access";
 

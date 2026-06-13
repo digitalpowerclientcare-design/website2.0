@@ -6,7 +6,7 @@ import { BLOG_INTRO } from "@/lib/blogContent";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "O3Xs blog — practical insights on enterprise AI delivery, business process automation, and governed software scale.",
+    "O3Xs blog — in-depth guides on enterprise AI, agentic workflows, verified software delivery, and business process automation for CIOs and engineering leaders.",
 };
 
 const HERO_IMAGE =
@@ -31,7 +31,7 @@ export default function BlogPage() {
         <div className="content-container relative z-10 max-w-3xl py-24 md:py-32">
           <p className="eyebrow mb-4 text-[var(--indigo-soft)]">{BLOG_INTRO.eyebrow}</p>
           <h1 className="heading-display text-white">{BLOG_INTRO.title}</h1>
-          <p className="body-lg mt-6 max-w-2xl text-white/75">{BLOG_INTRO.description}</p>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">{BLOG_INTRO.description}</p>
         </div>
       </section>
 
