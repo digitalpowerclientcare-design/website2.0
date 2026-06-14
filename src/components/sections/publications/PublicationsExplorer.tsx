@@ -10,11 +10,6 @@ import {
   PUBLICATIONS,
   type PublicationCategory,
 } from "@/lib/publicationsContent";
-<<<<<<< HEAD
-import { submitToWeb3Forms } from "@/lib/web3forms";
-import { PublicationAccessModal } from "./PublicationAccessModal";
-=======
->>>>>>> b717f80 (Remove ignored build and dmg files)
 
 export function PublicationsExplorer() {
   const [category, setCategory] = useState<PublicationCategory>("All");
@@ -24,82 +19,6 @@ export function PublicationsExplorer() {
     return PUBLICATIONS.filter((p) => p.category === category);
   }, [category]);
 
-<<<<<<< HEAD
-  const activePublication = useMemo(
-    () => PUBLICATIONS.find((p) => p.id === activeId) ?? null,
-    [activeId],
-  );
-
-  const openAccess = useCallback((publication: Publication) => {
-    setModalPublication(publication);
-    setSuccessEmail(null);
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setModalPublication(null);
-    setSuccessEmail(null);
-  }, []);
-
-  const handleCardClick = (publication: Publication) => {
-    const unlocked = unlockedIds.includes(publication.id);
-    if (unlocked) {
-      setActiveId(publication.id);
-      document.getElementById("publication-reader")?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-    openAccess(publication);
-  };
-
-  const handleSubmit = async (data: {
-    name: string;
-    email: string;
-    company: string;
-    role: string;
-    botcheck?: string;
-  }) => {
-    if (!modalPublication) return;
-    if (!data.name || !data.email || !data.company) return;
-
-    storePublicationAccess(modalPublication.id);
-    setUnlockedIds(getStoredPublicationAccess());
-    setSuccessEmail(data.email);
-    setActiveId(modalPublication.id);
-
-    const result = await submitToWeb3Forms({
-      subject: "New O3Xs Publication Access Request",
-      form_type: "publication_access",
-      source_page: "Publications",
-      botcheck: data.botcheck,
-      fields: {
-        name: data.name,
-        email: data.email,
-        company: data.company,
-        role: data.role,
-        publication_id: modalPublication.id,
-        publication_title: modalPublication.title,
-        report_title: modalPublication.reportTitle,
-      },
-    });
-
-    if (!result.ok) {
-      console.warn(
-        "[Web3Forms] Publication access email failed:",
-        result.message,
-      );
-    }
-  };
-
-  const afterSuccessClose = () => {
-    closeModal();
-    if (activeId) {
-      requestAnimationFrame(() => {
-        document.getElementById("publication-reader")?.scrollIntoView({ behavior: "smooth" });
-      });
-    }
-  };
-
-=======
->>>>>>> b717f80 (Remove ignored build and dmg files)
   return (
     <section className="section-padding bg-white pt-12 md:pt-14">
       <div className="content-container">
