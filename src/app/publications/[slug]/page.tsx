@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { PublicationDetailView } from "@/components/sections/publications/PublicationDetailView";
 import {
@@ -30,5 +31,15 @@ export default async function PublicationPage({ params }: PageProps) {
   const publication = getPublicationBySlug(slug);
   if (!publication) notFound();
 
-  return <PublicationDetailView publication={publication} />;
+  return (
+    <Suspense
+      fallback={
+        <div className="content-container py-32 text-center text-[var(--ink-muted)]">
+          Loading…
+        </div>
+      }
+    >
+      <PublicationDetailView publication={publication} />
+    </Suspense>
+  );
 }

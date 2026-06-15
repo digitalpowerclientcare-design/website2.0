@@ -1,16 +1,24 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Clock, FileText, Lock, Mail } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowLeft, Clock, FileText, Lock } from "lucide-react";
 import {
-  getStoredPublicationAccess,
-  storePublicationAccess,
+  PUBLICATION_ACCESS_COPY,
+  PUBLICATION_ACCESS_PARAM,
   type Publication,
 } from "@/lib/publicationsContent";
+import {
+  generatePublicationAccessToken,
+  getPublicationAccessGrant,
+  storePublicationAccessGrant,
+  validatePublicationAccessToken,
+} from "@/lib/publicationAccess";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 import { PublicationAccessModal } from "./PublicationAccessModal";
+import { PublicationReportViewer } from "./PublicationReportViewer";
 
 type PublicationDetailViewProps = {
   publication: Publication;
@@ -18,47 +26,122 @@ type PublicationDetailViewProps = {
 
 export function PublicationDetailView({ publication }: PublicationDetailViewProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const reportRef = useRef<HTMLDivElement>(null);
+  const scrollToReportRef = useRef(false);
+
   const [unlocked, setUnlocked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [successEmail, setSuccessEmail] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [invalidLink, setInvalidLink] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  const accessTokenFromUrl = searchParams.get(PUBLICATION_ACCESS_PARAM);
+
+  const syncAccessUrl = useCallback(
+    (token: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(PUBLICATION_ACCESS_PARAM, token);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [router, searchParams],
+  );
+
+  const clearAccessUrl = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(PUBLICATION_ACCESS_PARAM);
+    const query = params.toString();
+    router.replace(query ? `?${query}` : "?", { scroll: false });
+  }, [router, searchParams]);
 
   useEffect(() => {
-    setUnlocked(getStoredPublicationAccess().includes(publication.id));
-  }, [publication.id]);
+    const tokenFromUrl = searchParams.get(PUBLICATION_ACCESS_PARAM);
+    const grant = getPublicationAccessGrant(publication.id);
+
+    if (tokenFromUrl) {
+      if (validatePublicationAccessToken(publication.id, tokenFromUrl)) {
+        setUnlocked(true);
+        setInvalidLink(false);
+      } else {
+        setUnlocked(false);
+        setInvalidLink(true);
+      }
+    } else if (grant) {
+      setUnlocked(true);
+      setInvalidLink(false);
+      syncAccessUrl(grant.token);
+    } else {
+      setUnlocked(false);
+      setInvalidLink(false);
+    }
+
+    setHydrated(true);
+  }, [publication.id, searchParams, syncAccessUrl]);
+
+  useEffect(() => {
+    if (!unlocked || !hydrated || !scrollToReportRef.current) return;
+    scrollToReportRef.current = false;
+    requestAnimationFrame(() => {
+      reportRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [unlocked, hydrated]);
 
   const openModal = useCallback(() => {
-    setSuccessEmail(null);
     setModalOpen(true);
   }, []);
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
-    setSuccessEmail(null);
   }, []);
 
-  const handleSuccessClose = useCallback(() => {
-    setModalOpen(false);
-    setSuccessEmail(null);
-    router.push("/publications");
-  }, [router]);
-
-  const handleSubmit = (data: {
+  const handleSubmit = async (data: {
     name: string;
     email: string;
     company: string;
     role: string;
+    botcheck?: string;
   }) => {
     if (!data.name || !data.email || !data.company) return;
 
-    storePublicationAccess(publication.id);
-    setUnlocked(true);
-    setSuccessEmail(data.email);
+    setSubmitting(true);
 
-    // Hook for future API / Formspree / CRM — payload available here
-    void data;
+    const token = generatePublicationAccessToken();
+    storePublicationAccessGrant(publication.id, token);
+
+    const result = await submitToWeb3Forms({
+      subject: "New O3Xs Publication Access Request",
+      form_type: "publication_access",
+      source_page: "Publications",
+      botcheck: data.botcheck,
+      fields: {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        role: data.role,
+        publication_id: publication.id,
+        publication_title: publication.title,
+        report_title: publication.reportTitle,
+        access_token: token,
+      },
+    });
+
+    if (!result.ok) {
+      console.warn(
+        "[Web3Forms] Publication access email failed:",
+        result.message,
+      );
+    }
+
+    setUnlocked(true);
+    setInvalidLink(false);
+    setModalOpen(false);
+    setSubmitting(false);
+    scrollToReportRef.current = true;
+    syncAccessUrl(token);
   };
 
   const previewSection = publication.sections[0];
+  const showLockedState = hydrated && !unlocked;
 
   return (
     <>
@@ -131,7 +214,7 @@ export function PublicationDetailView({ publication }: PublicationDetailViewProp
             )}
 
             {unlocked ? (
-              <div className="mt-10 space-y-8">
+              <div ref={reportRef} className="mt-10 space-y-8">
                 {publication.sections.slice(1).map((section, i) => (
                   <div key={i}>
                     {section.heading && (
@@ -151,16 +234,31 @@ export function PublicationDetailView({ publication }: PublicationDetailViewProp
                   </div>
                 ))}
 
-                <div className="flex items-start gap-4 rounded-2xl border border-[var(--indigo)]/25 bg-[var(--indigo-bg)] px-6 py-5">
-                  <Mail size={20} className="mt-0.5 shrink-0 text-[var(--indigo)]" aria-hidden />
-                  <p className="text-[14px] leading-relaxed text-[var(--ink-secondary)]">
-                    <span className="font-medium text-[var(--ink)]">Full report: </span>
-                    {publication.reportTitle} — delivered to the email you provided.
-                  </p>
-                </div>
+                {publication.reportPdf && (
+                  <PublicationReportViewer
+                    title={publication.reportTitle}
+                    pdfPath={publication.reportPdf}
+                  />
+                )}
               </div>
-            ) : (
+            ) : showLockedState ? (
               <div className="mt-10 rounded-2xl border border-[var(--border)] bg-white p-8 text-center md:p-10">
+                {invalidLink && accessTokenFromUrl && (
+                  <div className="mx-auto mb-6 max-w-md rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-left text-[13px] leading-relaxed text-amber-900">
+                    <p className="font-medium">
+                      {PUBLICATION_ACCESS_COPY.invalidLinkTitle}
+                    </p>
+                    <p className="mt-1">{PUBLICATION_ACCESS_COPY.invalidLinkBody}</p>
+                    <button
+                      type="button"
+                      onClick={clearAccessUrl}
+                      className="mt-2 text-[12px] font-medium text-amber-800 underline underline-offset-2 hover:text-amber-950"
+                    >
+                      Clear invalid link
+                    </button>
+                  </div>
+                )}
+
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--indigo-bg)] text-[var(--indigo)]">
                   <Lock size={20} aria-hidden />
                 </div>
@@ -168,8 +266,9 @@ export function PublicationDetailView({ publication }: PublicationDetailViewProp
                   Continue reading
                 </h2>
                 <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[var(--ink-secondary)]">
-                  Request access to read the full article on-site. We&apos;ll also email you the
-                  complete report for your records.
+                  Request access to read the full article and executive report on this
+                  page. Your private link works on this device only — sharing it will
+                  not unlock the report elsewhere.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                   <button
@@ -187,7 +286,7 @@ export function PublicationDetailView({ publication }: PublicationDetailViewProp
                   </Link>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         </section>
       </article>
@@ -195,8 +294,8 @@ export function PublicationDetailView({ publication }: PublicationDetailViewProp
       <PublicationAccessModal
         publication={publication}
         open={modalOpen}
-        successEmail={successEmail}
-        onClose={successEmail ? handleSuccessClose : closeModal}
+        submitting={submitting}
+        onClose={closeModal}
         onSubmit={handleSubmit}
       />
     </>

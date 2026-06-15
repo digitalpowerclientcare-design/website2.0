@@ -15,6 +15,8 @@ export type Publication = {
   coverImageAlt: string;
   /** Shown in confirmation — what we email after access */
   reportTitle: string;
+  /** When set, full report PDF is shown inline after access is granted */
+  reportPdf?: string;
   sections: PublicationSection[];
 };
 
@@ -22,20 +24,17 @@ export const PUBLICATIONS_INTRO = {
   eyebrow: "Publications",
   title: "Research & insights for enterprise leaders.",
   description:
-    "Articles and reports from the O3Xs team on AI delivery, business process automation, and governed scale. Select a publication to preview — request access for the full article and we’ll deliver the report to your inbox.",
+    "Articles and reports from the O3Xs team on AI delivery, business process automation, and governed scale. Select a publication to preview — request access to read the full article and report on-site.",
 } as const;
 
 export const PUBLICATION_ACCESS_COPY = {
-  modalTitle: "Access the full article",
+  modalTitle: "Access the full article & report",
   modalSubtitle:
-    "Enter your details to continue reading. We’ll deliver the complete report to your inbox.",
-  submitLabel: "Send full report",
-  successTitle: "Your report is on the way",
-  successBody: (reportTitle: string, email: string) =>
-    `We’ve sent “${reportTitle}” to ${email}. Please check your inbox — and your spam folder — within the next few minutes.`,
-  successFootnote:
-    "If you don’t see it shortly, contact us at contact@o3xs.com and we’ll resend it.",
-  successCta: "Back to publications",
+    "Enter your details to unlock the complete article and executive report on this page.",
+  submitLabel: "Unlock full report",
+  invalidLinkTitle: "Access link not valid on this device",
+  invalidLinkBody:
+    "This private link was created on another browser or device. Request access below to read the report here.",
   privacyNote:
     "We use your details only to deliver this publication and relevant O3Xs research. No spam.",
 } as const;
@@ -63,6 +62,7 @@ export const PUBLICATIONS: Publication[] = [
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=85&w=1400",
     coverImageAlt: "Abstract AI neural network — enterprise agentic readiness",
     reportTitle: "Agentic AI Enterprise Readiness Report",
+    reportPdf: "/publications/reports/agentic-ai-readiness-executive-briefing-01.pdf",
     sections: [
       {
         body: "Most enterprises are experimenting with agents inside isolated pilots. Few have connected those pilots to production governance, measurable cycle-time outcomes, or a single definition of “done” that security and compliance can audit.",
@@ -94,6 +94,7 @@ export const PUBLICATIONS: Publication[] = [
       "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=85&w=1400",
     coverImageAlt: "Finance and engineering leaders aligning on unit economics",
     reportTitle: "Decision Economics for AI-Assisted SDLC",
+    reportPdf: "/publications/reports/decision-economics-research-briefing-01.pdf",
     sections: [
       {
         body: "Token-based pricing optimizes for vendor revenue, not customer outcomes. When every feature ships through a verification pipeline, the meaningful unit is a decision: one request that may complete in a single pass or a full plan–build–review cycle.",
@@ -121,6 +122,7 @@ export const PUBLICATIONS: Publication[] = [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=85&w=1400",
     coverImageAlt: "Operations team workshop — business process automation cadence",
     reportTitle: "BPA Operate Model Playbook",
+    reportPdf: "/publications/reports/bpa-operate-model-research-briefing-01.pdf",
     sections: [
       {
         body: "Diagnostics fail when they end in slides. Sustainable business process automation requires an operate layer: named owners, weekly reviews, exception routing, and metrics tied to dollars — not activity counts.",
@@ -148,6 +150,7 @@ export const PUBLICATIONS: Publication[] = [
       "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=85&w=1400",
     coverImageAlt: "Cross-functional team planning a governed AI toolchain",
     reportTitle: "Governed AI Toolchain Reference Architecture",
+    reportPdf: "/publications/reports/governed-ai-toolchain-research-briefing-01.pdf",
     sections: [
       {
         body: "Fortune 500 technology organizations often run dozens of overlapping AI-adjacent tools. Consolidation fails when it is framed as cost cutting alone; it succeeds when tied to release accountability and portfolio-wide quality gates.",
@@ -168,27 +171,4 @@ export function getPublicationBySlug(slug: string): Publication | undefined {
   return PUBLICATIONS.find((p) => p.id === slug);
 }
 
-export const SESSION_STORAGE_KEY = "o3xs-publication-access";
-
-export function getStoredPublicationAccess(): string[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as unknown;
-    return Array.isArray(parsed)
-      ? parsed.filter((id): id is string => typeof id === "string")
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-export function storePublicationAccess(publicationId: string): void {
-  const existing = getStoredPublicationAccess();
-  if (existing.includes(publicationId)) return;
-  sessionStorage.setItem(
-    SESSION_STORAGE_KEY,
-    JSON.stringify([...existing, publicationId]),
-  );
-}
+export const PUBLICATION_ACCESS_PARAM = "access";
