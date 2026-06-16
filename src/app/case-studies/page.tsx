@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { CaseStudyExplorer } from "@/components/sections/case-studies/CaseStudyExplorer";
+import { CaseStudyExplorerSkeleton } from "@/components/sections/case-studies/CaseStudyExplorerSkeleton";
 import { CtaBanner } from "@/components/sections/shared/CtaBanner";
 import { StatsGrid } from "@/components/sections/shared/StatsGrid";
 
@@ -72,13 +73,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* Interactive case study browser */}
-      <Suspense
-        fallback={
-          <div className="content-container py-20 text-[var(--ink-muted)]">
-            Loading case studies…
-          </div>
-        }
-      >
+      <Suspense fallback={<CaseStudyExplorerSkeleton />}>
         <CaseStudyExplorer />
       </Suspense>
 
