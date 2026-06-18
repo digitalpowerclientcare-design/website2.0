@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { PageTransition } from "@/components/providers/PageTransition";
 import { SITE } from "@/lib/site";
 import "./globals.css";
+import { ScrollProgressBar } from "../components/ScrollProgressBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen antialiased" suppressHydrationWarning>
+        <ScrollProgressBar />
         <SmoothScroll>
           <Navbar />
           <main className="pt-[72px]">
