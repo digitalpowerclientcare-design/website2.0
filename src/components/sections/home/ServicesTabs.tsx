@@ -11,6 +11,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
+import { EASE_OUT } from "@/lib/motion";
 import {
   CONSULTATION_FRAMEWORK,
   CONSULTATION_VALUES,
@@ -195,7 +196,7 @@ export function ServicesTabs({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: EASE_OUT }}
             >
               <ConsultationPanel onSwitchToForge={() => selectTab("forge")} />
             </motion.div>
@@ -208,7 +209,7 @@ export function ServicesTabs({
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: EASE_OUT }}
             >
               <ForgePanel onSwitchToConsultation={() => selectTab("consultation")} />
             </motion.div>

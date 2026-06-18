@@ -10,22 +10,7 @@ import {
   FORGE_USE_CASE_OPTIONS,
 } from "@/lib/contactContent";
 import { formDataToFields, submitToWeb3Forms } from "@/lib/web3forms";
-
-const BLEEDING_OPTIONS = [
-  "SDLC / Engineering inefficiency.",
-  "Marketing spend waste.",
-  "Operations / process bottlenecks.",
-  "Legal / compliance overhead.",
-  "Customer support costs.",
-  "Other.",
-];
-
-const COMPANY_SIZES = [
-  "Under $1M Revenue",
-  "$1M – $50M Revenue",
-  "$50M – $500M Revenue",
-  "$500M+ Revenue",
-];
+import { BLEEDING_OPTIONS, COMPANY_SIZES } from "@/lib/site";
 
 const inputBase =
   "w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3.5 text-[15px] text-[var(--ink)] transition-shadow duration-200 placeholder:text-[var(--ink-muted)] focus:border-[var(--indigo)] focus:shadow-[0_0_0_4px_rgba(83,58,253,0.12)] focus:outline-none";

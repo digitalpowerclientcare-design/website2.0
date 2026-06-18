@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { EASE_OUT, FADE_UP_INITIAL, FADE_UP_ANIMATE, VIEWPORT_ONCE } from "@/lib/motion";
 
 export function BetaAccessSection() {
   return (
@@ -22,10 +23,10 @@ export function BetaAccessSection() {
 
       <div className="content-container relative z-10 grid gap-12 md:grid-cols-2 md:items-center">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={FADE_UP_INITIAL}
+          whileInView={FADE_UP_ANIMATE}
+          viewport={VIEWPORT_ONCE}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
         >
           <p className="mb-3 text-[11px] font-medium tracking-[0.22em] text-white/60 uppercase">
             Ready to ship safely?
@@ -38,10 +39,10 @@ export function BetaAccessSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          initial={FADE_UP_INITIAL}
+          whileInView={FADE_UP_ANIMATE}
+          viewport={VIEWPORT_ONCE}
+          transition={{ duration: 0.7, delay: 0.1, ease: EASE_OUT }}
           className="flex flex-col items-start gap-4"
         >
           <Link

@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
 import { SITE } from "@/lib/site";
+import { EASE_OUT } from "@/lib/motion";
 import { HeroMesh } from "./HeroMesh";
 
 export function HeroHome() {
@@ -34,7 +35,7 @@ export function HeroHome() {
           <motion.h1
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, delay: 0.05, ease: EASE_OUT }}
             className="heading-display mb-6 text-[var(--ink)]"
           >
             We build AI systems that{" "}
@@ -75,7 +76,7 @@ export function HeroHome() {
         <motion.div
           initial={{ opacity: 0, y: 48, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, delay: 0.3, ease: EASE_OUT }}
           className="relative mx-auto w-full max-w-[560px] lg:max-w-none"
         >
           <div className="liquid-glass-card overflow-hidden rounded-[20px] border border-white/60 shadow-[0_32px_80px_rgba(83,58,253,0.18)]">

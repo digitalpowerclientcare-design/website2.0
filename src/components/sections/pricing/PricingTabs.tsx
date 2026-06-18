@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { EASE_OUT } from "@/lib/motion";
 import type { PricingTabId } from "@/lib/pricingContent";
 import { ConsultationPricing } from "./ConsultationPricing";
 import { ForgePricingPanel } from "./ForgePricingPanel";
@@ -74,7 +75,7 @@ export function PricingTabs() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3, ease: EASE_OUT }}
         >
           {active === "consultation" ? (
             <ConsultationPricing />

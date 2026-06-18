@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import {
@@ -11,53 +8,12 @@ import {
   FORGE_STATS,
   type ServiceId,
 } from "@/lib/homeContent";
-
-gsap.registerPlugin(ScrollTrigger);
+import { EASE_OUT, FADE_UP_INITIAL, FADE_UP_ANIMATE } from "@/lib/motion";
+import { StatCounter } from "@/components/ui/StatCounter";
 
 type HomeStatsProps = {
   service: ServiceId;
 };
-
-function StatValue({
-  value,
-  suffix,
-  delay,
-}: {
-  value: number;
-  suffix: string;
-  delay: number;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obj = { val: 0 };
-    const ctx = gsap.context(() => {
-      gsap.to(obj, {
-        val: value,
-        duration: 1.6,
-        delay,
-        ease: "power3.out",
-        snap: { val: 1 },
-        scrollTrigger: { trigger: el, start: "top 88%" },
-        onUpdate: () => {
-          el.textContent = `${Math.round(obj.val)}${suffix}`;
-        },
-      });
-    }, el);
-    return () => ctx.revert();
-  }, [value, suffix, delay]);
-
-  return (
-    <span
-      ref={ref}
-      className="font-stat block text-[56px] leading-none tracking-[-2px] text-[var(--indigo)]"
-    >
-      0{suffix}
-    </span>
-  );
-}
 
 const COPY: Record<
   ServiceId,
@@ -105,9 +61,9 @@ export function HomeStats({ service }: HomeStatsProps) {
       <div className="content-container grid gap-12 md:grid-cols-[2fr_3fr] md:items-start md:gap-14">
         <motion.div
           key={service}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={FADE_UP_INITIAL}
+          animate={FADE_UP_ANIMATE}
+          transition={{ duration: 0.5, ease: EASE_OUT }}
         >
           <p className="eyebrow mb-3">{copy.eyebrow}</p>
           <h2 className="heading-section">
@@ -129,20 +85,21 @@ export function HomeStats({ service }: HomeStatsProps) {
           {stats.map((stat, i) => (
             <motion.article
               key={`${service}-${stat.label}`}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={FADE_UP_INITIAL}
+              whileInView={FADE_UP_ANIMATE}
               viewport={{ once: true, margin: "-60px" }}
               transition={{
                 duration: 0.55,
                 delay: i * 0.1,
-                ease: [0.22, 1, 0.36, 1],
+                ease: EASE_OUT,
               }}
               className="group rounded-2xl border border-[var(--border)] bg-white p-8 transition-shadow duration-300 hover:shadow-[0_8px_32px_rgba(83,58,253,0.08)]"
             >
-              <StatValue
+              <StatCounter
                 value={stat.value}
                 suffix={stat.suffix}
                 delay={i * 0.1}
+                className="font-stat block text-[56px] leading-none tracking-[-2px] text-[var(--indigo)]"
               />
               <p className="mt-6 line-clamp-2 text-[14px] font-medium leading-snug text-[var(--ink-secondary)]">
                 {stat.label}

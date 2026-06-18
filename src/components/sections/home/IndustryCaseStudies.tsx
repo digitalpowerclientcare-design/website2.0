@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { INDUSTRY_PREVIEWS } from "@/lib/homeContent";
+import { EASE_OUT } from "@/lib/motion";
 
 function IndustryCard({
   industry,
@@ -25,7 +26,7 @@ function IndustryCard({
       transition={{
         duration: 0.55,
         delay: index * 0.06,
-        ease: [0.22, 1, 0.36, 1],
+        ease: EASE_OUT,
       }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[var(--indigo)]/30 hover:shadow-[0_16px_48px_rgba(83,58,253,0.08)]"
     >

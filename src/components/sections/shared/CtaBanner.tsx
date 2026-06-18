@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { TextRollButton } from "@/components/ui/TextRollButton";
+import { EASE_OUT, FADE_UP_INITIAL, FADE_UP_ANIMATE, VIEWPORT_ONCE } from "@/lib/motion";
 
 type CtaBannerProps = {
   eyebrow?: string;
@@ -43,10 +44,10 @@ export function CtaBanner({
         }`}
       >
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={FADE_UP_INITIAL}
+          whileInView={FADE_UP_ANIMATE}
+          viewport={VIEWPORT_ONCE}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
           className="max-w-2xl"
         >
           {eyebrow && (
@@ -63,7 +64,7 @@ export function CtaBanner({
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
             className="flex flex-col gap-6"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.35)]">
@@ -89,10 +90,10 @@ export function CtaBanner({
           </motion.div>
         ) : (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={FADE_UP_INITIAL}
+            whileInView={FADE_UP_ANIMATE}
             viewport={{ once: true }}
-            transition={{ delay: 0.15, duration: 0.6 }}
+            transition={{ delay: 0.15, duration: 0.6, ease: EASE_OUT }}
           >
             <TextRollButton
               href={ctaHref}

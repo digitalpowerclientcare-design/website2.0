@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { PAGE_IMAGES } from "@/lib/companyContent";
+import { EASE_OUT, FADE_UP_INITIAL, FADE_UP_ANIMATE } from "@/lib/motion";
 
 const BADGES = ["SOC2 Ready", "6 Verification Agents", "Server-Side Verified"];
 
@@ -45,9 +46,9 @@ export function ForgeDarkHero() {
 
       <div className="content-container relative z-10 grid items-center gap-12 py-24 md:py-32 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={FADE_UP_INITIAL}
+          animate={FADE_UP_ANIMATE}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
           className="max-w-2xl"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-[11px] font-medium tracking-[0.18em] text-white/80 uppercase">
@@ -133,7 +134,7 @@ export function ForgeDarkHero() {
         <motion.div
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 0.2, duration: 0.65, ease: EASE_OUT }}
           className="relative mx-auto w-full max-w-[560px] lg:max-w-none"
         >
           <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/[0.04] shadow-[0_32px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm">

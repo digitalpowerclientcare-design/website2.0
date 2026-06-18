@@ -37,6 +37,7 @@ import {
   type VerticalId,
 } from "@/lib/caseStudies";
 import { TextRollButton } from "@/components/ui/TextRollButton";
+import { EASE_OUT } from "@/lib/motion";
 
 const VERTICAL_ICONS = {
   automotive: Car,
@@ -259,7 +260,7 @@ export function CaseStudyExplorer() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.35, ease: EASE_OUT }}
           className="content-container"
         >
           <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-white shadow-[0_16px_48px_rgba(28,30,84,0.08)]">

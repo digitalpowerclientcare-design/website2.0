@@ -9,10 +9,16 @@ gsap.registerPlugin(ScrollTrigger);
 type StatCounterProps = {
   value: number;
   suffix?: string;
+  delay?: number;
   className?: string;
 };
 
-export function StatCounter({ value, suffix = "%", className }: StatCounterProps) {
+export function StatCounter({
+  value,
+  suffix = "%",
+  delay = 0,
+  className,
+}: StatCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -24,14 +30,11 @@ export function StatCounter({ value, suffix = "%", className }: StatCounterProps
     const ctx = gsap.context(() => {
       gsap.to(obj, {
         val: value,
-        duration: 1.8,
-        ease: "power2.out",
+        duration: 1.6,
+        delay,
+        ease: "power3.out",
         snap: { val: 1 },
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
+        scrollTrigger: { trigger: el, start: "top 88%" },
         onUpdate: () => {
           el.textContent = `${Math.round(obj.val)}${suffix}`;
         },
@@ -39,7 +42,7 @@ export function StatCounter({ value, suffix = "%", className }: StatCounterProps
     }, el);
 
     return () => ctx.revert();
-  }, [value, suffix]);
+  }, [value, suffix, delay]);
 
   return (
     <span ref={ref} className={className}>
